@@ -1,9 +1,9 @@
 def rvm_script
-    "source ~/.rvm/scripts/rvm;"
+    "source /usr/local/rvm/scripts/rvm;"
 end
 
 def rvm_installed?
-  "~/.rvm".p.exists?
+  "/usr/local/rvm".p.exists?
 end
 
 def rvm_run cmd
