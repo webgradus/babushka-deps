@@ -16,11 +16,11 @@ end
 # installs rvm
 dep 'rvm installed' do
   met? {
-    "~/.rvm/scripts/rvm".p.file?
+    "/usr/local/rvm/scripts/rvm".p.file?
   }
 
   meet {
-    shell 'curl -L get.rvm.io | bash -s stable'
+    shell 'curl -L https://get.rvm.io | bash -s stable'
   }
 end
 
@@ -33,7 +33,7 @@ dep 'rvm default ruby is set' do
 
   meet do
     while current_rubies.empty?
-      ruby = prompt_for_value "You need at least one ruby installed. Which one do you want to install?", :default => "1.9.2"
+      ruby = prompt_for_value "You need at least one ruby installed. Which one do you want to install?", :default => "1.9.3"
       rvm_run "rvm install #{ruby}"
     end
     if current_rubies.length == 1
@@ -50,7 +50,7 @@ end
 dep 'rvm defaults are installed' do
   requires 'rvm base'
 
-  define_var :rubyies, :default => "ruby-1.9.2", :message => "which rubies do you want to create? (seperate by ,)"
+  define_var :rubyies, :default => "ruby-1.9.3", :message => "which rubies do you want to create? (seperate by ,)"
   define_var :gems, :default => "bundler, rake, gemedit, powder, pry", :message => "which gems do you want to install into global? (seperate by ,)"
 
 
@@ -72,7 +72,7 @@ dep 'rvm defaults are installed' do
 	# are all required gems installed?
 	result = true;
 	rubies.each do |r|
-	  list = `#{rvm_script} rvm use #{r}@global;gem list`
+	  list = `#{rvm_script} rvm use #{r};gem list`
 
 	  # are all gems in the gemset?
 	  missing = gems.select{|e| list[/#{e}/] == nil}
@@ -88,7 +88,7 @@ dep 'rvm defaults are installed' do
     log "installing ruby: #{r}"
     rvm_run "rvm install #{r}"
     log "installing gems"
-    rvm_run "rvm use --create #{r}@global;" +
+    rvm_run "rvm use #{r};" +
       "gem install #{gems.join(' ')}"
     end
 
