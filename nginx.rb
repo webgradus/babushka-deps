@@ -139,18 +139,22 @@ end
 
 dep 'configured.nginx', :nginx_prefix do
   nginx_prefix.default!('/opt/nginx') # This is required because nginx.src might be cached.
-  requires 'nginx.src'.with(:nginx_prefix => nginx_prefix), 'www user and group', 'nginx.logrotate'
+  requires 'nginx.src'.with(:nginx_prefix => nginx_prefix), 'www user and group'
   met? {
+    "#{nginx_prefix / 'sites-available'}".p.exists?
+    "#{nginx_prefix / 'sites-enabled'}".p.exists?
     Babushka::Renderable.new(nginx_conf).from?(dependency.load_path.parent / "nginx/nginx.conf.erb")
   }
   meet {
+    sudo "mkdir #{nginx_prefix / 'sites-available'}"
+    sudo "mkdir #{nginx_prefix / 'sites-enabled'}" 
     render_erb 'nginx/nginx.conf.erb', :to => nginx_conf, :sudo => true
   }
 end
 
 dep 'nginx.src', :nginx_prefix, :version, :upload_module_version do
   nginx_prefix.default!("/opt/nginx")
-  version.default!('1.2.0')
+  version.default!('1.2.5')
   upload_module_version.default!('2.2.0')
   requires 'pcre.managed', 'libssl headers.managed', 'zlib headers.managed'
   source "http://nginx.org/download/nginx-#{version}.tar.gz"
