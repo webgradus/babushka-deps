@@ -1,5 +1,5 @@
 user www www;
-worker_processes 8;
+worker_processes 4;
 pid /opt/nginx/logs/nginx.pid;
 
 events {
@@ -28,17 +28,7 @@ http {
   gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
   gzip_buffers 16 8k; # handle gzipped output up to 128kB
 
-  # Don't edit this to serve content; instead, add a vhost.
-  server {
-    listen [::]:80;
-    server_name localhost;
-
-    location / {
-      root html;
-      index index.html;
-    }
-  }
-
+  
   # Pull in all enabled vhosts
-  include vhosts/on/*.conf;
+  include /opt/nginx/sites-enabled/*;
 }
