@@ -5,7 +5,7 @@ dep 'git.managed' do
 end
 
 dep 'git.src', :version do
-  version.default!('1.7.9')
+  version.default!('1.8.0.1')
   source "http://git-core.googlecode.com/files/git-#{version}.tar.gz"
   met? { in_path? "git >= #{version}" }
 end
