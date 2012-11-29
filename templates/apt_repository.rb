@@ -12,7 +12,7 @@ meta :apt_repository do
   end
 
   template do
-    met? { grep deb, sources_path }
+    met? { sources_path.p.grep(deb) }
 
     meet do
       log_block "Adding `#{deb}` to sources" do
