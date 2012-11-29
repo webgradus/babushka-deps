@@ -65,8 +65,7 @@ dep 'postgres.managed', :version do
   requires_when_unmet 'postgres.apt_repository'
   
   installs {
-    via :apt, ["-t squeeze-pgdg postgresql-#{owner.version}", "libpq-dev"]
-    via :brew, "postgresql"
+    shell %q{sudo apt-get install -t squeeze-pgdg postgresql-#{owner.version} libpq-dev}
   }
   provides "psql ~> #{version}.0"
 end
