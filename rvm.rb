@@ -1,6 +1,6 @@
 require File.expand_path("../helpers/rvm.rb", __FILE__)
 
-dep 'rvm requirements' do
+dep 'rvm_requirements.managed' do
   installs {
     via :apt, %w[build-essential openssl libreadline6 libreadline6-dev curl zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion]
   }
@@ -39,7 +39,7 @@ end
 
 # ensure a default ruby is set 
 dep 'rvm default ruby is set' do
-  requires 'rvm installed', 'rvm requirements'  
+  requires 'rvm installed', 'rvm_requirements.managed'  
   define_var :default_ruby, :choices => current_rubies, :message => "Which ruby do you what to use as default?"
   
   met?{rvm_run("rvm current")[/system/] == nil}
