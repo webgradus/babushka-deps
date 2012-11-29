@@ -11,7 +11,7 @@ dep 'rvm' do
   requires 'rvm configured'
 end
 
-def 'sh is bash' do
+dep 'sh is bash' do
   met? { raw_shell("echo $SHELL").result == "/bin/bash" }
   meet {
   	shell("chsh -s /bin/bash")
