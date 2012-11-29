@@ -8,7 +8,7 @@ meta :apt_repository do
   end
 
   def deb
-    "deb #{url} #{distribution.blank? ? SystemDetector.profile_for_host.name : distribution} #{components.join(' ')}"
+    "deb #{url} #{distribution.blank? ? Babushka::SystemDetector.profile_for_host.name : distribution} #{components.join(' ')}"
   end
 
   template do
