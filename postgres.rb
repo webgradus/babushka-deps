@@ -65,7 +65,7 @@ dep 'postgres.managed', :version do
   requires_when_unmet 'postgres.apt_repository'
   
   installs {
-    via :apt, ["libpq5", "postgresql-common", "postgresql-#{owner.version}", "libpq-dev"]
+    via :apt, ["libpq5", "postgresql-common", "postgresql-#{owner.version}", "postgresql-client-#{owner.version}", "libpq-dev"]
     via :brew, "postgresql"
   }
   provides "psql ~> #{version}.0"
