@@ -4,7 +4,7 @@ end
 
 dep 'mongo.apt_repository' do
   url "http://downloads-distro.mongodb.org/repo/debian-sysvinit"
-  distribution ""
+  distribution " "
   components "dist", "10gen"
 
   after do
