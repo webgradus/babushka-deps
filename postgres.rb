@@ -63,9 +63,10 @@ dep 'postgres.managed', :version do
   #version.default!(shell('psql --version').val_for('psql (PostgreSQL)')[/^\d\.\d/]) if which('psql')
   requires 'set.locale'
   requires_when_unmet 'postgres.apt_repository'
-  
-  installs {
-    shell %q{sudo apt-get install -t squeeze-pgdg postgresql-#{owner.version} libpq-dev}
+  met? { shell? "psql --version"  }
+  meet {
+    shell("sudo apt-get install -t squeeze-pgdg postgresql-#{owner.version} libpq-dev")
   }
+  
   provides "psql ~> #{version}.0"
 end
