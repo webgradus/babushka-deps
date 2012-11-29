@@ -12,7 +12,7 @@ dep 'rvm' do
 end
 
 dep 'sh is bash' do
-  met? { raw_shell("echo $SHELL").result == "/bin/bash" }
+  met? { raw_shell("echo $SHELL").stdout == "/bin/bash\n" }
   meet {
   	shell("chsh -s /bin/bash")
   }
