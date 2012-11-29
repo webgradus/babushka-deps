@@ -48,7 +48,8 @@ end
 
 dep 'postgres.apt_repository' do
   url "http://pgapt.debian.net"
-  components "squeeze-pgdg", "main"
+  distribution "squeeze-pgdg"
+  components "main"
 
   after do
     sudo "wget -q http://pgapt.debian.net/ACCC4CF8.asc -O- | apt-key add -"
