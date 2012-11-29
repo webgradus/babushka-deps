@@ -8,6 +8,7 @@ dep 'mongo.apt_repository' do
 
   after do
     sudo "apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10"
+    sudo 'apt-get update'
   end
 end
 
