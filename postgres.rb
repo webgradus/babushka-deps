@@ -53,6 +53,7 @@ dep 'postgres.apt_repository' do
 
   after do
     sudo "wget -q http://pgapt.debian.net/ACCC4CF8.asc -O- | apt-key add -"
+    sudo 'apt-get update'
   end
 end
 
