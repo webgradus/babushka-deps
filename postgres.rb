@@ -60,12 +60,12 @@ end
 dep 'postgres.managed', :version do
   version.default('9.2')
   # Assume the installed version if there is one
-  version.default!(shell('psql --version').val_for('psql (PostgreSQL)')[/^\d\.\d/]) if which('psql')
+  #version.default!(shell('psql --version').val_for('psql (PostgreSQL)')[/^\d\.\d/]) if which('psql')
   requires 'set.locale'
   requires_when_unmet 'postgres.apt_repository'
   
   installs {
-    via :apt, ["libpq5", "postgresql-client-#{owner.version}", "postgresql-common", "postgresql-#{owner.version}", "libpq-dev"]
+    via :apt, ["libpq5", "postgresql-common", "postgresql-#{owner.version}", "libpq-dev"]
     via :brew, "postgresql"
   }
   provides "psql ~> #{version}.0"
