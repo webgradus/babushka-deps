@@ -46,14 +46,22 @@ dep 'postgres backups' do
   }
 end
 
+dep 'postgres.apt_repository' do
+  url "http://pgapt.debian.net"
+  components "squeeze-pgdg", "main"
+
+  after do
+    sudo "wget -q http://pgapt.debian.net/ACCC4CF8.asc -O- | apt-key add -"
+  end
+end
+
 dep 'postgres.managed', :version do
   version.default('9.2')
   # Assume the installed version if there is one
   version.default!(shell('psql --version').val_for('psql (PostgreSQL)')[/^\d\.\d/]) if which('psql')
   requires 'set.locale'
-  requires_when_unmet {
-    on :apt, 'ppa'.with('ppa:pitti/postgresql')
-  }
+  requires_when_unmet 'postgres.apt_repository'
+  
   installs {
     via :apt, ["postgresql-#{owner.version}", "libpq-dev"]
     via :brew, "postgresql"
