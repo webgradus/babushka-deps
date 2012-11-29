@@ -73,6 +73,7 @@ dep 'mdns.managed' do
 end
 dep 'lsof.managed'
 dep 'memcached.managed'
+dep 'mc.managed'
 dep 'ncurses.managed' do
   installs {
     via :apt, 'libncurses5-dev', 'libncursesw5-dev'
