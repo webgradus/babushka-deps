@@ -6,9 +6,8 @@ def rvm_installed?
   "/usr/local/rvm".p.exists?
 end
 
-def rvm_run cmd
-    requires 'sh is bash'
-    log_shell("rvm_run: #{cmd}", rvm_script + cmd)
+def rvm_run cmd    
+    log_shell("rvm_run: #{cmd}", cmd)
 end
 
 def current_rubies
