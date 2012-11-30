@@ -1,6 +1,6 @@
 require File.expand_path("../helpers/rvm.rb", __FILE__)
 
-dep 'rvm_requirements.managed' do
+dep 'rvm_requirements.lib' do
   installs {
     via :apt, %w[build-essential openssl libreadline6 libreadline6-dev curl zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev autoconf libc6-dev libncurses5-dev automake libtool bison subversion]
   }
