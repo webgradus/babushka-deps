@@ -24,7 +24,11 @@ APP_USER="root" # usually it is a server administrator user
 ENV=production
 
 USER_HOME="/$APP_USER"
+<% if type == 'rails' %>
 APP_ROOT="/opt/$APP_NAME/current"
+<% else %>
+APP_ROOT="/opt/$APP_NAME"
+<% end %>
 PID="$APP_ROOT/tmp/pids/unicorn.pid"
 UNICORN_OPTS="-D -E $ENV -c $APP_ROOT/config/unicorn.rb"
 SET_PATH="source /usr/local/rvm/scripts/rvm; cd $APP_ROOT"
