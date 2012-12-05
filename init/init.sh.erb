@@ -24,7 +24,7 @@ APP_USER="root" # usually it is a server administrator user
 ENV=production
 
 USER_HOME="/$APP_USER"
-<% if type == 'rails' %>
+<% if app_type == 'rails' %>
 APP_ROOT="/opt/$APP_NAME/current"
 <% else %>
 APP_ROOT="/opt/$APP_NAME"
