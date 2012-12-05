@@ -11,7 +11,7 @@ end
 dep 'unicorn-init-script', :app_name, :app_type do
   app_name.ask("What is the name of application located at /opt")
   app_type.default('rails').choose(%w[rails locomotive])
-  requires 'unicorn-init-script copied'.with(app_name).with(app_type)
+  requires 'unicorn-init-script copied'.with(app_name, app_type)
   requires 'rcconf.managed'
   if app_type == 'rails'
     shell "cd /opt/#{app_name}/current; rvm rvmrc trust ."
