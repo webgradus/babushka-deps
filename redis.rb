@@ -4,7 +4,7 @@ dep 'redis.src', :version do
   prefix '/opt/redis'
   provides prefix / 'src/redis-server'
 
-  configure { log_shell "configure", default_configure_command }
+  configure {  }
   build { log_shell "build", "make" }
   install {  }
 
