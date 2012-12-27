@@ -1,8 +1,9 @@
 dep 'redis.src', :version do  
   version.default!('2.6.7')  
-  source "http://redis.googlecode.com/files/redis-#{version}.tar.gz"        
+  source "http://redis.googlecode.com/files/redis-#{version}.tar.gz"
+  path "/opt/redis-#{version}"
   
-  met? { "/opt/redis-#{version}/src/redis-server".exists? && File.executable?("/opt/redis-#{version}/src/redis-server")}
+  met? { (path / "src/redis-server").exists? && File.executable?(path / "src/redis-server")}
   meet {
     cd "/opt" do
       shell "wget #{source}"
