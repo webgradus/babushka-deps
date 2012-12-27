@@ -5,12 +5,11 @@ dep 'redis installed', :version, :path do
   
   met? { (path / "src/redis-server").exists? && File.executable?(path / "src/redis-server")}
   meet {
-    cd "/opt" do
+      shell "cd /opt"
       shell "wget #{source}"
-      shell "tar xzf redis-#{version}.tar.gz"
+      shell { "tar xzf redis-#{version}.tar.gz"
       shell "cd redis-#{version}"
-      shell "make"
-    end
+      shell "make"    
   }
   
 end
