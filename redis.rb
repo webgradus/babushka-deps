@@ -8,7 +8,7 @@ dep 'redis.src', :version, :path do
     cd "/opt" do
       shell "wget #{source}"
       shell "tar xzf redis-#{version}.tar.gz"
-      shell "cd redis-#{version}.tar.gz"
+      shell "cd redis-#{version}"
       shell "make"
     end
   }
