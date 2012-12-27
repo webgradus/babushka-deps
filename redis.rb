@@ -14,6 +14,12 @@ dep 'redis installed', :version, :path do
       shell "tar xzf redis-#{version}.tar.gz", :cd => "/opt"      
       shell "make", :cd => path    
       shell "rm redis-#{version}.tar.gz", :cd => "/opt"
+      shell "mkdir /etc/redis"
+      shell "cp redis.conf /etc/redis/", :cd => path
+      shell "groupadd redis"
+      shell "useradd -l -g redis redis"
+      shell "touch /var/log/redis.log"
+      shell "chown redis:redis /var/log/redis.log"
   }
   
 end
