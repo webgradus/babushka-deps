@@ -1,6 +1,6 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides: redis-server
+# Provides: redis
 # Required-Start: $syslog $network
 # Required-Stop: $syslog
 # Should-Start: $local_fs
@@ -12,7 +12,7 @@
 ### END INIT INFO
  
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/bin/redis-server
+DAEMON=<%= path %>/src/redis-server
 DAEMON_ARGS=/etc/redis/redis.conf
 NAME=redis-server
 DESC=redis-server
