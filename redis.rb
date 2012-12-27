@@ -4,12 +4,10 @@ dep 'redis installed', :version, :path do
   path.default!("/opt/redis-#{version}")
   
   met? { (path / "src/redis-server").exists? && File.executable?(path / "src/redis-server")}
-  meet {
-      shell "cd /opt"
-      shell "wget #{source}"
-      shell "tar xzf redis-#{version}.tar.gz"
-      shell "cd redis-#{version}"
-      shell "make"    
+  meet {      
+      shell "wget #{source}", :cd => "/opt"
+      shell "tar xzf redis-#{version}.tar.gz", :cd => "/opt"      
+      shell "make", :cd => path    
   }
   
 end
