@@ -1,5 +1,5 @@
 upstream <%= app_name %>_server{
-        server unix:/tmp/.<%= app_name %> fail_timeout=0;
+        server unix:/opt/<%= app_name %>/current/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
 }
 server {
    listen <%= port %>;
