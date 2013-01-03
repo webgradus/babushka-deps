@@ -219,7 +219,8 @@ dep 'unicorn-server', :app_name, :port do
     "/opt/nginx/sites-enabled/#{app_name}".p.exists?    
   }
   meet {    
-    shell("ln -f -s /opt/nginx/sites-available/#{app_name} /opt/nginx/sites-enabled/")    
+    shell("ln -f -s /opt/nginx/sites-available/#{app_name} /opt/nginx/sites-enabled/")
+    shell("service nginx restart")
   }
   
 end
