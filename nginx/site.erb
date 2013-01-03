@@ -2,7 +2,7 @@ upstream <%= app_name %>_server{
         server unix:/tmp/.<%= app_name %> fail_timeout=0;
 }
 server {
-   listen <%= ip %>:<%= port %>;
+   listen <%= port %>;
     client_max_body_size 1G;
     keepalive_timeout 5;
     root /opt/<%= app_name %>/current/public;
