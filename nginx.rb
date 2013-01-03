@@ -200,7 +200,7 @@ dep 'http basic auth enabled.nginx', :nginx_prefix, :domain do
   }
 end
 
-dep 'unicorn-server', :app_name, :port do  
+dep 'unicorn-server available', :app_name, :port do  
   requires 'configured.nginx'
   app_name.ask("What is the name of application located at /opt")
   port.ask("What port do you want to choose for your application")
@@ -209,6 +209,17 @@ dep 'unicorn-server', :app_name, :port do
   }
   meet {    
     render_erb "nginx/site.erb", :to => "/opt/nginx/sites-available/#{app_name}", :sudo => true    
+  }
+  
+end
+
+dep 'unicorn-server', :app_name, :port do  
+  requires 'unicorn-server available'.with(app_name, port)
+  met? {
+    "/opt/nginx/sites-enabled/#{app_name}".p.exists?    
+  }
+  meet {    
+    shell("ln -f -s /opt/nginx/sites-available/#{app_name} /opt/nginx/sites-enabled/")    
   }
   
 end
