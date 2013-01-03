@@ -199,3 +199,16 @@ dep 'http basic auth enabled.nginx', :nginx_prefix, :domain do
     restart_nginx
   }
 end
+
+dep 'unicorn-server', :app_name, :port do  
+  requires 'configured.nginx'
+  app_name.ask("What is the name of application located at /opt")
+  port.ask("What port do you want to choose for your application")
+  met? {    
+    Babushka::Renderable.new("/opt/nginx/sites-available/#{app_name}").from?(dependency.load_path.parent / "nginx/site.erb")
+  }
+  meet {    
+    render_erb "nginx/site.erb", :to => "/opt/nginx/sites-available/#{app_name}", :sudo => true    
+  }
+  
+end
