@@ -1,5 +1,5 @@
 def rvm_script
-    "source /usr/local/rvm/scripts/rvm;"
+    "source /usr/local/rvm/scripts/rvm"
 end
 
 def rvm_installed?
@@ -7,7 +7,7 @@ def rvm_installed?
 end
 
 def rvm_run cmd    
-    shell("chsh -s /bin/bash;" + rvm_script + cmd)    
+    shell("chsh -s /bin/bash && " + rvm_script + " && " + cmd)    
 end
 
 def current_rubies
