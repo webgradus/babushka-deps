@@ -1,5 +1,5 @@
 def rvm_script
-    "source /usr/local/rvm/scripts/rvm"
+    "/usr/local/rvm/scripts/rvm"
 end
 
 def rvm_installed?
@@ -7,10 +7,10 @@ def rvm_installed?
 end
 
 def rvm_run cmd    
-    shell("chsh -s /bin/bash && " + rvm_script + " && " + cmd)    
+    log_shell("rvm_run: #{cmd}", rvm_script + " " + cmd)    
 end
 
 def current_rubies
-  out = rvm_run("rvm list rubies")
+  out = rvm_run("list rubies")
   rubies = out.scan(/^[=> ]{3}([^ ]+) /).flatten
 end
