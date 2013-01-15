@@ -7,9 +7,7 @@ def rvm_installed?
 end
 
 def rvm_run cmd    
-    shell("chsh -s /bin/bash")
-    shell(rvm_script)
-    shell(cmd)
+    shell("chsh -s /bin/bash;" + rvm_script + cmd)    
 end
 
 def current_rubies
