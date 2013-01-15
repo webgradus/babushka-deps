@@ -42,12 +42,12 @@ dep 'rvm default ruby is set' do
   requires 'rvm installed', 'rvm_requirements.lib'  
   define_var :default_ruby, :choices => current_rubies, :message => "Which ruby do you what to use as default?"
   
-  met?{rvm_run("rvm current")[/system/] == nil}
+  met?{rvm_run("current")[/system/] == nil}
 
   meet do
     while current_rubies.empty?
       ruby = Babushka::Prompt.get_value("You need at least one ruby installed. Which one do you want to install?", :default => "1.9.3")
-      rvm_run "rvm install #{ruby}"
+      rvm_run "install #{ruby}"
     end
     if current_rubies.length == 1
       default_ruby = current_rubies[0]
@@ -55,7 +55,7 @@ dep 'rvm default ruby is set' do
       default_ruby = var :default_ruby
     end
     
-    rvm_run("rvm use #{default_ruby} --default") 
+    rvm_run("use #{default_ruby} --default") 
   end
 end
 
@@ -77,7 +77,7 @@ dep 'rvm defaults are installed' do
 
   met? {
     # are all required rubies installed?
-    ruby_list = `#{rvm_script} rvm list rubies`
+    ruby_list = `#{rvm_script} list rubies`
     missing = rubies.select{|r| ruby_list[/#{r}/] == nil}
       unless missing.empty?
 	false
@@ -85,7 +85,7 @@ dep 'rvm defaults are installed' do
 	# are all required gems installed?
 	result = true;
 	rubies.each do |r|
-	  list = `#{rvm_script} rvm use #{r};gem list`
+	  list = `#{rvm_script} use #{r};gem list`
 
 	  # are all gems in the gemset?
 	  missing = gems.select{|e| list[/#{e}/] == nil}
@@ -99,9 +99,9 @@ dep 'rvm defaults are installed' do
 
     rubies.each do |r|
     log "installing ruby: #{r}"
-    rvm_run "rvm install #{r}"
+    rvm_run "install #{r}"
     log "installing gems"
-    rvm_run "rvm use #{r};" +
+    rvm_run "use #{r};" +
       "gem install #{gems.join(' ')}"
     end
 
