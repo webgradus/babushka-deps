@@ -116,6 +116,7 @@ end
 dep 'tmux.managed'
 dep 'traceroute.managed'
 dep 'tree.managed'
+dep 'unzip.managed'
 dep 'vim.managed'
 dep 'wget.managed'
 dep 'yaml headers.managed' do
