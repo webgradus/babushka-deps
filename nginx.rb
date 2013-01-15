@@ -155,12 +155,27 @@ end
 dep 'nginx.src', :nginx_prefix, :version, :upload_module_version do
   nginx_prefix.default!("/opt/nginx")
   version.default!('1.2.5')
-  upload_module_version.default!('2.2.0')
+  upload_module_version.default!('2.2')
+
   requires 'pcre.managed', 'libssl headers.managed', 'zlib headers.managed'
+  on :linux do 
+    requires "unzip.managed"
+  end
+
   source "http://nginx.org/download/nginx-#{version}.tar.gz"
-  extra_source "http://www.grid.net.ru/nginx/download/nginx_upload_module-#{upload_module_version}.tar.gz"
-  configure_args "--with-ipv6", "--with-pcre", "--with-http_ssl_module", "--with-http_gzip_static_module",
-    "--add-module='../../nginx_upload_module-#{upload_module_version}/nginx-upload-module-#{upload_module_version}'"
+  extra_source "https://github.com/vkholodkov/nginx-upload-module/archive/#{upload_module_version}.zip"
+
+  configure_args L{
+    [
+      "--with-ipv6",
+      "--with-pcre",
+      "--with-http_ssl_module",
+      "--with-http_gzip_static_module",
+      "--add-module='../../#{upload_module_version}/nginx-upload-module-#{upload_module_version}'",
+      "--with-ld-opt='#{shell('pcre-config --libs')}'"
+    ].join(' ')
+  }
+
   prefix nginx_prefix
   provides nginx_prefix / 'sbin/nginx'
 
@@ -173,7 +188,7 @@ dep 'nginx.src', :nginx_prefix, :version, :upload_module_version do
       log "nginx isn't installed"
     else
       installed_version = shell(nginx_prefix / 'sbin/nginx -v') {|shell| shell.stderr }.val_for(/(nginx: )?nginx version:/).sub('nginx/', '')
-      (installed_version == version).tap {|result|
+      (installed_version.to_version >= version.to_s).tap {|result|
         log "nginx-#{installed_version} is installed"
       }
     end
