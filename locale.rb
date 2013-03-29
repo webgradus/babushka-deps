@@ -12,9 +12,9 @@ end
 dep 'set.locale', :locale_name do
   locale_name.default!('en_US')
   requires 'exists.locale'.with(locale_name)
-  met? {
+  #met? {
     #shell('locale').val_for('LANG')[locale_regex(locale_name)]
-  }
+  #}
   on :apt do
     meet {
       sudo("echo 'LANG=#{local_locale(locale_name)}' > /etc/default/locale")
