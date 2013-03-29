@@ -47,12 +47,12 @@ dep 'postgres backups' do
 end
 
 dep 'postgres.apt_repository' do
-  url "http://pgapt.debian.net"
+  url "http://apt.postgresql.org/pub/repos/apt/"
   distribution "squeeze-pgdg"
   components "main"
 
   after do
-    sudo "wget -q http://pgapt.debian.net/ACCC4CF8.asc -O- | apt-key add -"
+    sudo "wget -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add -"    
     sudo 'apt-get update'
   end
 end
