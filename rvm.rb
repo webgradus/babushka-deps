@@ -38,9 +38,9 @@ dep 'rvm installed' do
 end
 
 # ensure a default ruby is set 
-dep 'rvm default ruby is set' do
-  requires 'rvm installed', 'rvm_requirements.lib'  
-  define_var :default_ruby, :choices => current_rubies, :message => "Which ruby do you what to use as default?"
+dep 'rvm default ruby is set', :default_ruby do
+  requires 'rvm installed', 'rvm_requirements.lib'
+  default_ruby.ask("Which ruby do you what to use as default?").choose(current_rubies)  
   
   met?{rvm_run("current")[/system/] == nil}
 
@@ -52,7 +52,7 @@ dep 'rvm default ruby is set' do
     if current_rubies.length == 1
       default_ruby = current_rubies[0]
     else
-      default_ruby = var :default_ruby
+      default_ruby = default_ruby
     end
     
     rvm_run("use #{default_ruby} --default") 
