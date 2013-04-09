@@ -16,7 +16,7 @@ dep 'wagon site', :site_name do
   meet {
     shell "rvm use 1.9.3 do wagon init #{site_name}"
     shell "cd #{site_name}"
-    shell "echo 'rvm use 1.9.3' > .rvmrc"
+    shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
     shell "rvm use 1.9.3 do bundle install"
   }
 end
