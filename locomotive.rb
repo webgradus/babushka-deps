@@ -16,9 +16,11 @@ dep 'wagon site', :site_name do
   met? { site_path.exists? }
   meet {
     shell "rvm use 1.9.3 do wagon init #{site_name}"
+    log "created a site..."
     cd "#{site_path.to_s}" do
-      shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"    
-      shell "rvm use 1.9.3 do bundle install"
+      shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
+      log "making 'bundle install' in #{site_path.to_s}..."
+      shell "rvm use 1.9.3 do bundle install"      
     end
   }
 end
