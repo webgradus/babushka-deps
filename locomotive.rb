@@ -1,5 +1,16 @@
-dep 'locomotive' do
-  requires 'wagon'  
+dep 'locomotive', :host do
+  host.ask("Where to deploy LocomotiveCMS")
+  met? {
+    as('root') {
+      shell %{ssh root@#{host} 'sh -'}, :input => shell?('cd /opt/locomotive'), :log => true
+    }
+  }
+  
+  meet {
+    as('root') {
+      
+    }  
+  }
 end
 
 dep 'wagon' do
