@@ -8,7 +8,7 @@ dep 'locomotive', :host do
   
   meet {
     as('root') {      
-      remote_shell "cd /opt", "sh -"
+      remote_shell "cd /opt"
       remote_shell "rvm use 1.9.3 do rails new locomotive --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
     }  
   }
