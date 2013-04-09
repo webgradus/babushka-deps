@@ -1,5 +1,12 @@
 # borrowed some code from https://github.com/conversation/babushka-deps/blob/master/provision.rb
 
+def as user, &block
+    previous_user, @user = @user, user
+    yield
+  ensure
+    @user = previous_user
+end
+
 def remote_shell *cmd
     host_spec = "#{@user || 'root'}@#{host}"
     opening_message = [
