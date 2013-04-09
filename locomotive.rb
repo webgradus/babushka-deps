@@ -2,7 +2,7 @@ dep 'locomotive', :host do
   host.ask("Where to deploy LocomotiveCMS")
   met? {
     as('root') {
-      shell %{ssh root@#{host} 'sh -'}, :input => shell?('cd /opt/locomotive'), :log => true
+      shell %{ssh root@#{host} 'sh -'}, :input => 'cd /opt/locomotive', :log => true
     }
   }
   
