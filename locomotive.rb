@@ -9,7 +9,7 @@ dep 'wagon' do
   }
 end
 
-dep 'wagon site' do
+dep 'wagon site', :site_name do
   requires 'wagon'
   site_name.ask("Please provide site's folder name:")
   met? { site_name.p.exists? }
