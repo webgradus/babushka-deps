@@ -15,8 +15,7 @@ dep 'wagon site', :site_name do
   site_path = (shell "pwd") / site_name
   met? { site_path.exists? }
   meet {
-    shell "rvm use 1.9.3 do wagon init #{site_name}"
-    shell "cd #{site_path.to_s}"
+    shell "rvm use 1.9.3 do wagon init #{site_name} && cd #{site_path.to_s}"
     shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
     shell "rvm use 1.9.3 do bundle install"
   }
