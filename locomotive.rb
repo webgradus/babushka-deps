@@ -1,5 +1,5 @@
 dep 'locomotive' do
-  require 'wagon'  
+  requires 'wagon'  
 end
 
 dep 'wagon' do
@@ -10,7 +10,7 @@ dep 'wagon' do
 end
 
 dep 'wagon site' do
-  require 'wagon'
+  requires 'wagon'
   site_name.ask("Please provide site's folder name:")
   met? { site_name.p.exists? }
   meet {
