@@ -26,7 +26,7 @@ dep 'locomotive', :host, :app_name do
   host.ask("Where to deploy LocomotiveCMS")
   app_name.ask("App or site name that will be located at /opt")
   met? {
-    shell %{ssh root@#{host} 'sh -'}, :input => 'cd /opt/locomotive', :log => true    
+    shell %{ssh root@#{host} 'sh -'}, :input => "cd /opt/#{app_name}", :log => true    
   }
   
   meet {
