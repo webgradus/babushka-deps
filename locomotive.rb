@@ -22,9 +22,10 @@ dep 'locomotive.local', :host, :app_name do
   }
 end
 
-dep 'locomotive', :host, :app_name do
+dep 'locomotive', :host, :app_name, :port do
   host.ask("Where to deploy LocomotiveCMS")
   app_name.ask("App or site name that will be located at /opt")
+  port.ask("HTTP Port for configuring NGINX server")
   met? {
     shell %{ssh root@#{host} 'sh -'}, :input => "cd /opt/#{app_name}", :log => true    
   }
@@ -32,6 +33,9 @@ dep 'locomotive', :host, :app_name do
   meet {
     as('root') {      
       remote_babushka "webgradus:locomotive.local", :host => host, :app_name => app_name
+      remote_babushka "webgradus:unicorn-server", :app_name => app_name, :port => port
+      remote_babushka "webgradus:unicorn-init-script", :app_name => app_name, :app_type => "locomotive"
+      remote_shell "/etc/init.d/#{app_name} start"
     }  
   }
 end
