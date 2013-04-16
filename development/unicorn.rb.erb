@@ -12,10 +12,12 @@ deploy_to = "/opt/#{app_name}"
 
 <% if app_type == 'rails' %>
   current_path = "#{deploy_to}/current"
+  shared_path = "#{deploy_to}/shared"
 <% else %>
   current_path = "#{deploy_to}"
+  shared_path = "#{deploy_to}"
 <% end %>
-shared_path = "#{deploy_to}/shared"
+
 shared_bundler_gems_path = "#{shared_path}/bundle"
 
 Unicorn::HttpServer::START_CTX[0] = "#{shared_bundler_gems_path}/ruby/1.9.1/bin/unicorn_rails"
@@ -44,7 +46,11 @@ listen "#{current_path}/tmp/sockets/#{app_name}.sock", :backlog => 64
 timeout 30
 
 # feel free to point this anywhere accessible on the filesystem
-pid "#{shared_path}/pids/unicorn.pid"
+% if app_type == 'rails' %>
+  pid "#{shared_path}/pids/unicorn.pid"
+<% else %>
+  pid "#{shared_path}/tmp/pids/unicorn.pid"
+<% end %>  
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
