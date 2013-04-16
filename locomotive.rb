@@ -10,7 +10,10 @@ dep 'locomotive.local', :host do
         shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "compass-rails", "~> 1.0.2", :group => "assets"' >> Gemfile}
         shell %{echo 'gem "therubyracer", ">= 0.8.2"' >> Gemfile}
+        log "bundle install..."
         shell "rvm use 1.9.3 do bundle install"
+        log "running locomotive generator..."
+        shell "rvm use 1.9.3 do bundle exec rails g locomotive:install"
       end
     end
   }
