@@ -1,10 +1,10 @@
-dep 'locomotive.local', :host do
-  met? { "/opt/locomotive".p.exists? }
+dep 'locomotive.local', :host, :app_name do
+  met? { "/opt/#{app_name}".p.exists? }
     
   meet {
     cd "/opt" do
-      shell "rvm use 1.9.3 do rails new locomotive --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
-      cd "/opt/locomotive" do
+      shell "rvm use 1.9.3 do rails new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
+      cd "/opt/#{app_name}" do
         shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
         shell %{echo 'gem "locomotive_cms", "~> 2.0.3", :require => "locomotive/engine"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}
@@ -14,20 +14,24 @@ dep 'locomotive.local', :host do
         shell "rvm use 1.9.3 do bundle install"
         log "running locomotive generator..."
         shell "rvm use 1.9.3 do bundle exec rails g locomotive:install"
+        render_erb "locomotive/locomotive.rb.erb", :to => "/opt/#{app_name}/config/initializers/locomotive.rb", :perms => '755', :sudo => true
+        render_erb "locomotive/mongoid.yml.erb", :to => "/opt/#{app_name}/config/mongoid.yml", :perms => '755', :sudo => true
+        render_erb "locomotive/carrierwave.rb.erb", :to => "/opt/#{app_name}/config/initializers/carrierwave.rb", :perms => '755', :sudo => true
       end
     end
   }
 end
 
-dep 'locomotive', :host do
+dep 'locomotive', :host, :app_name do
   host.ask("Where to deploy LocomotiveCMS")
+  app_name.ask("App or site name that will be located at /opt")
   met? {
     shell %{ssh root@#{host} 'sh -'}, :input => 'cd /opt/locomotive', :log => true    
   }
   
   meet {
     as('root') {      
-      remote_babushka "webgradus:locomotive.local", :host => host
+      remote_babushka "webgradus:locomotive.local", :host => host, :app_name => app_name
     }  
   }
 end
