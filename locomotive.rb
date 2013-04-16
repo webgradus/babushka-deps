@@ -4,6 +4,9 @@ dep 'locomotive.local', :host do
   meet {
     cd "/opt" do
       shell "rvm use 1.9.3 do rails new locomotive --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
+      cd "/locomotive" do
+        shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
+      end
     end
   }
 end
