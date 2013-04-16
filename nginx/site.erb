@@ -1,12 +1,20 @@
 upstream <%= app_name %>_server{
-        server unix:/opt/<%= app_name %>/current/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
+        <% if app_type == 'rails' %>
+          server unix:/opt/<%= app_name %>/current/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
+        <% else %>
+          server unix:/opt/<%= app_name %>/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
+        <% end %>
 }
 server {
    listen <%= port %>;
    # server_name <%= app_name %>.ru www.<%= app_name %>.ru
    client_max_body_size 1G;
    keepalive_timeout 5;
-   root /opt/<%= app_name %>/current/public;
+   <% if app_type == 'rails' %>
+     root /opt/<%= app_name %>/current/public;
+   <% else %>
+     root /opt/<%= app_name %>/public;
+   <% end %>
    try_files $uri/index.html $uri.html $uri @<%= app_name %>;
    location @<%= app_name %> {
        proxy_pass http://<%= app_name %>_server;
@@ -18,7 +26,11 @@ server {
    }
    error_page 500 502 503 504 /500.html;
    location = /500.html {
-       root /opt/<%= app_name %>/current/public;
+        <% if app_type == 'rails' %>
+          root /opt/<%= app_name %>/current/public;
+        <% else %>
+          root /opt/<%= app_name %>/public;
+        <% end %>
    }
    if ($host = 'www.<%= app_name %>.ru'){
        rewrite ^/(.*)$ http://<%= app_name %>.ru/$1 permanent;
