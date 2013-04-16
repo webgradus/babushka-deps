@@ -46,7 +46,7 @@ listen "#{current_path}/tmp/sockets/#{app_name}.sock", :backlog => 64
 timeout 30
 
 # feel free to point this anywhere accessible on the filesystem
-% if app_type == 'rails' %>
+<% if app_type == 'rails' %>
   pid "#{shared_path}/pids/unicorn.pid"
 <% else %>
   pid "#{shared_path}/tmp/pids/unicorn.pid"
