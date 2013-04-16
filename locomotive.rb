@@ -37,7 +37,7 @@ dep 'locomotive', :host, :app_name, :port do
       log "generating init script..."
       remote_babushka "webgradus:unicorn-init-script", :app_name => app_name, :app_type => "locomotive"
       log "generating unicorn.rb..."
-      remote_babushka "webgradus:prepare-deploy", :app_name => app_name, :git_username => "gradus", :server_ip => host, :app_path => "/opt/#{app_name}"
+      remote_babushka "webgradus:prepare-deploy", :app_name => app_name, :git_username => "gradus", :server_ip => host, :app_path => "/opt/#{app_name}", :app_type => "locomotive"
       log "starting Unicorn..."
       remote_shell "/etc/init.d/#{app_name} start"
       log "generating Nginx server - restarting Nginx..."
