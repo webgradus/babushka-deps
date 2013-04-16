@@ -41,7 +41,7 @@ dep 'locomotive', :host, :app_name, :port do
       log "starting Unicorn..."
       remote_shell "/etc/init.d/#{app_name} start"
       log "generating Nginx server - restarting Nginx..."
-      remote_babushka "webgradus:unicorn-server", :app_name => app_name, :port => port
+      remote_babushka "webgradus:unicorn-server", :app_name => app_name, :port => port, :app_type => "locomotive"
     }  
   }
 end
