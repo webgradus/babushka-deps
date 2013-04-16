@@ -1,15 +1,22 @@
+dep 'locomotive.local', :host do
+  met? { "/opt/locomotive".p.exists? }
+    
+  meet {
+    cd "/opt" do
+      shell "rvm use 1.9.3 do rails new locomotive --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
+    end
+  }
+end
+
 dep 'locomotive', :host do
   host.ask("Where to deploy LocomotiveCMS")
   met? {
-    as('root') {
-      shell %{ssh root@#{host} 'sh -'}, :input => 'cd /opt/locomotive', :log => true
-    }
+    shell %{ssh root@#{host} 'sh -'}, :input => 'cd /opt/locomotive', :log => true    
   }
   
   meet {
     as('root') {      
-      remote_shell "cd /opt"
-      remote_shell "rvm use 1.9.3 do rails new locomotive --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
+      remote_babushka "webgradus:locomotive.local", :host => host
     }  
   }
 end
