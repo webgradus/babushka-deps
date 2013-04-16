@@ -228,8 +228,9 @@ dep 'unicorn-server available', :app_name, :port do
   
 end
 
-dep 'unicorn-server', :app_name, :port do  
+dep 'unicorn-server', :app_name, :port, :app_type do  
   requires 'unicorn-server available'.with(app_name, port)
+  app_type.default('rails').choose(%w[rails locomotive])
   met? {
     "/opt/nginx/sites-enabled/#{app_name}".p.exists?    
   }
