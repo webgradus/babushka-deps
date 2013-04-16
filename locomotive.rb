@@ -6,10 +6,10 @@ dep 'locomotive.local', :host do
       shell "rvm use 1.9.3 do rails new locomotive --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
       cd "/opt/locomotive" do
         shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
-        shell %{echo 'gem 'locomotive_cms', '~> 2.0.3', :require => 'locomotive/engine'' >> Gemfile}
-        shell %{echo 'gem 'unicorn'' >> Gemfile}
-        shell %{echo 'gem 'compass-rails', '~> 1.0.2', :group => 'assets'' >> Gemfile}
-        shell %{echo 'gem 'therubyracer', '>= 0.8.2'' >> Gemfile}
+        shell %{echo 'gem "locomotive_cms", "~> 2.0.3", :require => "locomotive/engine"' >> Gemfile}
+        shell %{echo 'gem "unicorn"' >> Gemfile}
+        shell %{echo 'gem "compass-rails", "~> 1.0.2", :group => "assets"' >> Gemfile}
+        shell %{echo 'gem "therubyracer", ">= 0.8.2"' >> Gemfile}
         shell "rvm use 1.9.3 do bundle install"
       end
     end
