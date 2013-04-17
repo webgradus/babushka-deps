@@ -23,3 +23,14 @@ dep 'unicorn-init-script', :app_name, :app_type do
     sudo "update-rc.d #{app_name} defaults"
   }
 end
+
+dep 'start', :app_name, :app_type do
+  app_type.default!('rails')
+  requires 'unicorn-init-script'.with(app_name, app_type)
+  met? {
+    app_type == 'rails' ? "/opt/#{app_name}/current/tmp/pids/unicorn.pid".p.exists? : "/opt/#{app_name}/tmp/pids/unicorn.pid".p.exists?
+  }
+  meet {
+    shell "/etc/init.d/#{app_name} start"
+  }
+end
