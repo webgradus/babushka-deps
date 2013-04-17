@@ -17,6 +17,8 @@ dep 'locomotive.local', :host, :app_name do
         render_erb "locomotive/locomotive.rb.erb", :to => "/opt/#{app_name}/config/initializers/locomotive.rb", :sudo => true
         render_erb "locomotive/mongoid.yml.erb", :to => "/opt/#{app_name}/config/mongoid.yml", :sudo => true
         render_erb "locomotive/carrierwave.rb.erb", :to => "/opt/#{app_name}/config/initializers/carrierwave.rb", :sudo => true
+        log "precompiling assets..."
+        shell "rvm use 1.9.3 do bundle exec rake assets:precompile"
       end
     end
   }
