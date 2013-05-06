@@ -12,10 +12,10 @@ dep 'autobackup', :app_name, :app_path, :ruby_version do
   }
   
    if (app_path / "config/schedule.rb").exists?
-    shell %{echo 'job_type :backup, "cd :path && rvm use #{ruby_version} do bundle exec backup perform -t general -c config/backup/config.rb"' >> config/shedule.rb}
-    shell %{ echo 'every 3.days do' >> config/shedule.rb}
-    shell %{ echo 'backup ""' >> config/shedule.rb}
-    shell %{ echo 'end' >> config/shedule.rb}
+    shell %{echo 'job_type :backup, "cd :path && rvm use #{ruby_version} do bundle exec backup perform -t general -c config/backup/config.rb"' >> config/schedule.rb}
+    shell %{ echo 'every 3.days do' >> config/schedule.rb}
+    shell %{ echo 'backup ""' >> config/schedule.rb}
+    shell %{ echo 'end' >> config/schedule.rb}
    else
     met? {
 	Babushka::Renderable.new(app_path / "config/schedule.rb").from?(dependency.load_path.parent / "autobackup/schedule.rb.erb")
