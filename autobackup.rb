@@ -22,8 +22,8 @@ end
 dep 'schedule', :app_path, :ruby_version do
   app_path.default!("")
   ruby_version.default("2.0.0").choose(%w[2.0.0 1.9.3])
-  shell %{echo 'job_type :backup, "cd :path && rvm use #{ruby_version} do bundle exec backup perform -t general -c config/backup/config.rb"' >> config/schedule.rb}
-  shell %{ echo 'every 3.days do' >> config/schedule.rb}
+  shell %{echo 'job_type :backup, "cd :path && rvm use #{ruby_version} do bundle exec backup perform -t webgradus_backup -c config/backup/config.rb"' >> config/schedule.rb}
+  shell %{ echo 'every 1.week do' >> config/schedule.rb}
   shell %{ echo 'backup ""' >> config/schedule.rb}
   shell %{ echo 'end' >> config/schedule.rb}
 end
