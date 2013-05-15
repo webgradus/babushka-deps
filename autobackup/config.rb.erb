@@ -27,6 +27,7 @@
 
 ##
 # Load all models from the models directory (after the above global configuration blocks)
+Bundler.require(:backup)
 Dir[File.join(File.dirname(Config.config_file), "models", "*.rb")].each do |model|
   instance_eval(File.read(model))
 end
