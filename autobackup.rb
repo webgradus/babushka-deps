@@ -9,18 +9,19 @@ dep 'autobackup', :app_name, :app_path, :ruby_version do
   end
 
   met? {
-    Babushka::Renderable.new(app_path / "config/backup/config.rb").from?(dependency.load_path.parent / "autobackup/config.rb.erb") && Babushka::Renderable.new(app_path / "config/backup/models/webgradus_backup.rb").from?(dependency.load_path.parent / "autobackup/webgradus_backup.rb.erb")
+    Babushka::Renderable.new(app_path / "config/backup/config.rb").from?(dependency.load_path.parent / "autobackup/config.rb.erb") && Babushka::Renderable.new(app_path / "config/backup/models/webgradus_backup.rb").from?(dependency.load_path.parent / "autobackup/webgradus_backup.rb.erb") && Babushka::Renderable.new(app_path / "config/backup.yml").from?(dependency.load_path.parent / "autobackup/backup.yml")
   }
   meet {
     render_erb "autobackup/config.rb.erb", :to => (app_path / "config/backup/config.rb").to_s
     render_erb "autobackup/webgradus_backup.rb.erb", :to => (app_path / "config/backup/models/webgradus_backup.rb").to_s
+    render_erb "autobackup/backup.yml", :to => (app_path "config/backup.yml")
     shell "echo 'group :backup do' >> Gemfile"
-    shell %{echo 'gem "backup", "3.3.2" ' >> Gemfile}
-    shell %{echo 'gem "whenever" >> Gemfile'}
-    shell %{echo 'gem "fog", "~>1.9.0" >> Gemfile'}
-    shell %{echo 'gem "net-ssh", "<= 2.5.2" >> Gemfile'}
-    shell %{echo 'gem "mail", "~>2.5.0" >> Gemfile'}
-    shell %{echo 'gem "excon", "~>0.17.0" >> Gemfile'}
+    shell %{echo 'gem "backup", "3.3.2"' >> Gemfile}
+    shell %{echo 'gem "whenever"' >> Gemfile}
+    shell %{echo 'gem "fog", "~>1.9.0"' >> Gemfile}
+    shell %{echo 'gem "net-ssh", "<= 2.5.2"' >> Gemfile}
+    shell %{echo 'gem "mail", "~>2.5.0"' >> Gemfile}
+    shell %{echo 'gem "excon", "~>0.17.0"' >> Gemfile}
     shell "echo 'end' >> Gemfile"
   }
 
@@ -29,7 +30,7 @@ dep 'autobackup', :app_name, :app_path, :ruby_version do
   }
   meet
   {
-      shell "cp autobackup/backup.yml #{app_path}/config"
+      shell "cp #{dependency.load_path.parent / }autobackup/backup.yml #{app_path}/config"
   }
   
 
