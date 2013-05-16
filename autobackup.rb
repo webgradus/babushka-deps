@@ -15,6 +15,7 @@ dep 'autobackup', :app_name, :app_path, :ruby_version do
     render_erb "autobackup/config.rb.erb", :to => (app_path / "config/backup/config.rb").to_s
     render_erb "autobackup/webgradus_backup.rb.erb", :to => (app_path / "config/backup/models/webgradus_backup.rb").to_s
     render_erb "autobackup/backup.yml.erb", :to => (app_path / "config/backup.yml").to_s
+    shell "echo 'config/backup.yml' >> .gitignore"
     shell "echo 'group :backup do' >> Gemfile"
     shell %{echo ' gem "backup", "3.3.2"' >> Gemfile}
     shell %{echo ' gem "whenever"' >> Gemfile}
