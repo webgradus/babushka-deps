@@ -18,11 +18,7 @@ dep 'autobackup', :app_name, :app_path, :ruby_version do
     shell "echo 'config/backup.yml' >> .gitignore"
     shell "echo 'group :backup do' >> Gemfile"
     shell %{echo ' gem "backup", "3.3.2"' >> Gemfile}
-    shell %{echo ' gem "whenever"' >> Gemfile}
-    shell %{echo ' gem "fog", "~>1.9.0"' >> Gemfile}
-    shell %{echo ' gem "net-ssh", "<= 2.5.2"' >> Gemfile}
-    shell %{echo ' gem "mail", "~>2.5.0"' >> Gemfile}
-    shell %{echo ' gem "excon", "~>0.17.0"' >> Gemfile}
+    shell %{echo ' gem "whenever"' >> Gemfile}    
     shell "echo 'end' >> Gemfile"
   }
 
