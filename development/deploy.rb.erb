@@ -4,7 +4,7 @@ require "bundler/capistrano"
 #require "whenever/capistrano"                 # uncomment this if you need whenever integration
 
 load 'deploy/assets'
-set :rvm_ruby_string, '1.9.3'
+set :rvm_ruby_string, '<%= ruby_version %>'
 # Load RVM's capistrano plugin.
 require "rvm/capistrano"
 set :rvm_type, :system
