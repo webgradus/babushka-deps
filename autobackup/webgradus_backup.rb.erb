@@ -34,7 +34,8 @@ Backup::Model.new(:webgradus_backup, 'Backups of Webgradus') do
   archive :public do |archive|
     # Run the `tar` command using `sudo`
     # archive.use_sudo
-    archive.add 'public/'
+      archive.add 'public/'
+      archive.add '../../shared/'
   end
 
 
@@ -70,7 +71,7 @@ Backup::Model.new(:webgradus_backup, 'Backups of Webgradus') do
   store_with S3 do |s3|
     s3.bucket            = "gradus.backup"
     s3.path              = "/<%= app_name %>"
-    s3.keep              = 25
+    s3.keep              = 10
     s3.access_key_id     = backupconfig['s3_access_key_id']
     s3.secret_access_key = backupconfig['s3_secret_access_key_id']
     s3.region            = "us-east-1"
