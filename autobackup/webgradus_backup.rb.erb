@@ -6,7 +6,7 @@ require 'yaml'
 #
 # $ backup perform -t webgradus_backup [-c <path_to_configuration_file>]
 #
-Backup::Model.new(:webgradus_backup, 'Backups of Webgradus') do
+Backup::Model.new(:webgradus_backup, 'Backup of <%= app_name %>') do
 
   ##
   # Archive [Archive]
