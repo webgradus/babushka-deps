@@ -35,7 +35,8 @@ Backup::Model.new(:webgradus_backup, 'Backups of Webgradus') do
     # Run the `tar` command using `sudo`
     # archive.use_sudo
       archive.add 'public/'
-      archive.add '../../shared/'
+      archive.add '../../shared/assets/'
+      archive.add '../../shared/system/'
   end
 
 
