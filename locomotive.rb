@@ -6,7 +6,7 @@ dep 'locomotive.local', :host, :app_name do
       shell "rvm use 1.9.3 do rails new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
       cd "/opt/#{app_name}" do
         shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
-        shell %{echo 'gem "locomotive_cms", "~> 2.1.3", :require => "locomotive/engine"' >> Gemfile}
+        shell %{echo 'gem "locomotive_cms", "~> 2.1.4", :require => "locomotive/engine"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "compass-rails", "~> 1.0.2", :group => "assets"' >> Gemfile}
         shell %{echo 'gem "therubyracer", ">= 0.8.2"' >> Gemfile}
