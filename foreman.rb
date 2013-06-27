@@ -1,4 +1,4 @@
-dep 'foreman', :app_path do
+dep 'foreman', :app_path, :use_faye? do
   use_faye?.default('no').choose(%w[yes no])
   foreman_in_gemfile = shell? %{grep "foreman" Gemfile}
   met? {
