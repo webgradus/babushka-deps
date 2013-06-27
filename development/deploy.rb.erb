@@ -31,6 +31,8 @@ role :db,  "<%= server_ip %>", :primary => true # This is where Rails migrations
 #after "deploy:update_code", :copy_uploads # use this task for copying assets
 before "deploy:assets:precompile", :copy_database_settings
 after "deploy:assets:precompile", :copy_backup_settings
+after 'deploy:update', 'foreman:export'
+after 'deploy:update', 'foreman:restart'
 
 task :link_assets, roles => :app do
   assets_path = "#{shared_path}/assets"
@@ -60,21 +62,31 @@ set :unicorn_conf, "#{current_path}/config/unicorn.rb"
 set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 # - for unicorn - #
-namespace :deploy do
-  desc "Start application"
-  task :start, :roles => :app do
-    run "cd #{deploy_to}/current && bundle exec unicorn_rails -Dc #{unicorn_conf} -E production"
+namespace :foreman do
+  desc "Export the Procfile to Ubuntu's upstart scripts"
+  task :export, :roles => :app do
+    run "cd #{release_path} && bundle exec foreman export upstart /etc/init " +
+        "-f ./Procfile.production -a #{application} -u #{user} -l #{shared_path}/log"
   end
 
-  desc "Stop application"
+  desc "Start the application services"
+  task :start, :roles => :app do
+    run "cd #{deploy_to}/current && bundle exec foreman start"
+  end
+
+  desc "Stop the application services"
   task :stop, :roles => :app do
     run "[ -f #{unicorn_pid} ] && kill -QUIT `cat #{unicorn_pid}`"
   end
 
-  desc "Restart Application"
+  desc "Restart the application services"
   task :restart, :roles => :app do
-      stop
-      start
+    stop
+    start
   end
 
+  desc "Display logs for a certain process - arg example: PROCESS=web-1"
+  task :logs, :roles => :app do
+    run "cd #{current_path}/log && cat #{ENV["PROCESS"]}.log"
+  end
 end

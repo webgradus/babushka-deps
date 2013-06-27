@@ -18,7 +18,7 @@ dep 'autobackup', :app_name, :app_path, :ruby_version do
     shell "echo 'config/backup.yml' >> .gitignore"
     shell "echo 'group :backup do' >> Gemfile"
     shell %{echo ' gem "backup"' >> Gemfile}
-    shell %{echo ' gem "whenever"' >> Gemfile}    
+    shell %{echo ' gem "whenever"' >> Gemfile}
     shell "echo 'end' >> Gemfile"
   }
 
