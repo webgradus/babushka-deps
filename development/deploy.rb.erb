@@ -71,7 +71,7 @@ namespace :foreman do
 
   desc "Start the application services"
   task :start, :roles => :app do
-    run "cd #{deploy_to}/current && bundle exec foreman start"
+    run "cd #{deploy_to}/current && bundle exec foreman start -f ./Procfile.production"
   end
 
   desc "Stop the application services"
@@ -81,7 +81,7 @@ namespace :foreman do
 
   desc "Restart the application services"
   task :restart, :roles => :app do
-    stop
+    stop rescue nil
     start
   end
 
