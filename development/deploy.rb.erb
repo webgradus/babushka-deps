@@ -89,3 +89,23 @@ namespace :foreman do
     run "cd #{current_path}/log && cat #{ENV["PROCESS"]}.log"
   end
 end
+
+# deploy with foreman#
+#
+namespace :deploy do
+  desc "Zero-downtime restart of Unicorn"
+  task :restart, :except => { :no_release => true } do
+    foreman.restart
+  end
+
+  desc "Start unicorn"
+  task :start, :except => { :no_release => true } do
+    foreman.start
+  end
+
+  desc "Stop unicorn"
+  task :stop, :except => { :no_release => true } do
+    foreman.stop
+  end
+end
+
