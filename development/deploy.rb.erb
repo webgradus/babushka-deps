@@ -64,8 +64,9 @@ set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
   task :export, :roles => :app do
-    run "cd #{release_path} && bundle exec foreman export upstart /etc/init " +
-        "-f ./Procfile.production -a #{application} -u #{user} -l #{shared_path}/log"
+    run "cd #{current_path} && bundle exec foreman export initscript /etc/init.d " +
+    "-f ./Procfile.production -a #{application} -u #{user} -l #{shared_path}/log" rescue nil
+    run "chmod 755 /etc/init.d/#{application}"
   end
 
   desc "Start the application services"
