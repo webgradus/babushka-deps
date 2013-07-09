@@ -32,7 +32,6 @@ role :db,  "<%= server_ip %>", :primary => true # This is where Rails migrations
 before "deploy:assets:precompile", :copy_database_settings
 after "deploy:assets:precompile", :copy_backup_settings
 after 'deploy:update', 'foreman:export'
-after 'deploy:update', 'foreman:restart'
 
 task :link_assets, roles => :app do
   assets_path = "#{shared_path}/assets"
