@@ -1,7 +1,8 @@
-dep 'autobackup', :app_name, :app_path, :ruby_version do
+dep 'autobackup', :app_name, :app_path, :ruby_version, :database do
   requires 'schedule'
   app_name.ask("What is the name of application?")
   app_path.default!("")
+  database.default("mysql").choose(%w[mysql postgresql])
 
   if !(app_path / "config/backup").exists?
     shell %{ mkdir "config/backup"}

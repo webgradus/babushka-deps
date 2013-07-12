@@ -40,28 +40,45 @@ Backup::Model.new(:webgradus_backup, 'Backup of <%= app_name %>') do
   end
 
 
-  ##
-  # MySQL [Database]
-  #
   dbconfig = YAML::load(ERB.new(IO.read(File.join('config', 'database.yml'))).result)['production']
-  database MySQL do |db|
-    # To dump all databases, set `db.name = :all` (or leave blank)
-    db.name               = dbconfig['database']
-    db.username           = dbconfig['username']
-    db.password           = dbconfig['password']
-    db.host               = dbconfig['host']
-    # db.port               = 3306
-    # db.socket             = "/tmp/mysql.sock"
-    # Note: when using `skip_tables` with the `db.name = :all` option,
-    # table names should be prefixed with a database name.
-    # e.g. ["db_name.table_to_skip", ...]
-    # db.skip_tables        = ["skip", "these", "tables"]
-    # db.only_tables        = ["only", "these" "tables"]
-    # db.additional_options = ["--quick", "--single-transaction"]
-    # Optional: Use to set the location of this utility
-    #   if it cannot be found by name in your $PATH
-    # db.mysqldump_utility = "/opt/local/bin/mysqldump"
-  end
+  <% if database == 'mysql' %>
+    ##
+    # MySQL [Database]
+    #
+    database MySQL do |db|
+      # To dump all databases, set `db.name = :all` (or leave blank)
+      db.name               = dbconfig['database']
+      db.username           = dbconfig['username']
+      db.password           = dbconfig['password']
+      db.host               = dbconfig['host']
+      # db.port               = 3306
+      # db.socket             = "/tmp/mysql.sock"
+      # Note: when using `skip_tables` with the `db.name = :all` option,
+      # table names should be prefixed with a database name.
+      # e.g. ["db_name.table_to_skip", ...]
+      # db.skip_tables        = ["skip", "these", "tables"]
+      # db.only_tables        = ["only", "these" "tables"]
+      # db.additional_options = ["--quick", "--single-transaction"]
+      # Optional: Use to set the location of this utility
+      #   if it cannot be found by name in your $PATH
+      # db.mysqldump_utility = "/opt/local/bin/mysqldump"
+    end
+  <% elsif database == 'postgresql' %>
+    ##
+    # PostgreSQL [Database]
+    #
+    database PostgreSQL do |db|
+      db.name               = dbconfig['database']
+      db.username           = dbconfig['username']
+      db.password           = dbconfig['password']
+     # db.host               = "localhost"
+     # db.port               = 5432
+     # db.socket             = "/tmp/pg.sock"
+     # db.skip_tables        = ["skip", "these", "tables"]
+     # db.only_tables        = ["only", "these", "tables"]
+     # db.additional_options = ["-xc", "-E=utf8"]
+    end
+  <%end%>
  
 
 
