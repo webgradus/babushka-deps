@@ -4,7 +4,7 @@ dep 'redis', :version, :path do
 end
 
 dep 'redis installed', :version, :path do  
-  version.default!('2.6.11')  
+  version.default!('2.6.14')  
   source = "http://redis.googlecode.com/files/redis-#{version}.tar.gz"
   path.default!("/opt/redis-#{version}")
   
