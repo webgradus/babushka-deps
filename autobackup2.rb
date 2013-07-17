@@ -1,5 +1,5 @@
 dep 'autobackup2', :app_name, :app_path, :database do
-  app_name.ask("What is the name of application?")
+  requires "schedule2"
   app_path.default!("")
   database.default("mysql").choose(%w[mysql postgresql mongodb])
   
@@ -9,10 +9,10 @@ dep 'autobackup2', :app_name, :app_path, :database do
   meet {
     render_erb "autobackup/model_template.rb.erb", :to => ("/root/Backup/models/" + app_name + ".rb").to_s
   }
-  requires "schedule2"
 end
 
 dep "schedule2", :app_name do
+  app_name.ask("What is the name of application?")
   met? {
     shell? %{ grep #{app_name} /root/Backup/config/schedule.rb}
   }
