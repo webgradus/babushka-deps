@@ -9,7 +9,10 @@ dep 'autobackup2', :app_name, :app_path, :database do
   meet {
     render_erb "autobackup/model_template.rb.erb", :to => ("/root/Backup/models/" + app_name + ".rb").to_s
   }
+  requires "schedule2"
+end
 
+dep "schedule2", :app_name
   met? {
     shell? %{ grep #{app_name} /root/Backup/config/schedule.rb}
   }
@@ -20,6 +23,5 @@ dep 'autobackup2', :app_name, :app_path, :database do
     shell %{ cd /root/Backup }
     shell %{ whenever }
     shell %{ whenever --update-crontab }
-  }
- 
+  } 
 end
