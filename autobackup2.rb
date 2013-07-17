@@ -21,8 +21,7 @@ dep "schedule2", :app_name do
     shell %{ echo 'every 1.week do' >> /root/Backup/config/schedule.rb }
     shell %{ echo '  command "backup perform -t #{app_name}"' >> /root/Backup/config/schedule.rb }
     shell %{ echo 'end' >> /root/Backup/config/schedule.rb }
-    shell %{ cd /root/Backup }
-    shell %{ whenever }
-    shell %{ whenever --update-crontab }
+    shell "whenever", :cd => '/root/Backup/'
+    shell "whenever --update-crontab", :cd => '/root/Backup/'
   } 
 end
