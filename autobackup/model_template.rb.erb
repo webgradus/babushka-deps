@@ -9,17 +9,17 @@ Backup::Model.new(:<%= app_name %>, 'Backup of <%= app_name %>') do
   end
 
   <% if database == 'mysql' %>
-    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt',app_name,'shared', 'database.yml'))).result)['production']
+    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt','<%=app_name%>','shared', 'database.yml'))).result)['production']
     database MySQL do |db|
       db.name               = dbconfig['database']
     end
   <% elsif database == 'postgresql' %>
-    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt',app_name, 'shared', 'database.yml'))).result)['production']
+    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt','<%=app_name%>', 'shared', 'database.yml'))).result)['production']
     database PostgreSQL do |db|
       db.name               = dbconfig['database']
     end
   <% elsif database == 'mongodb'%>
-    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt',app_name,'config', 'mongoid.yml'))).result)['production']
+    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt','<%=app_name%>','config', 'mongoid.yml'))).result)['production']
     database MongoDB do |db|
       db.name = dbconfig['database']
     end
