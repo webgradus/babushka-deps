@@ -7,7 +7,7 @@ dep 'autobackup2', :app_name, :app_path, :database do
     Babushka::Renderable.new("/root/Backup/models/#{app_name}.rb").from?(dependency.load_path.parent / "autobackup/model_template.rb.erb")
   }
   meet {
-    render_erb "autobackup/model_tamplate.rb.erb", :to => ("/root/Backup/models/#{app_name}.rb").to_s
+    render_erb "autobackup/model_template.rb.erb", :to => ("/root/Backup/models/#{app_name}.rb").to_s
   }
 
   met? {
@@ -17,7 +17,9 @@ dep 'autobackup2', :app_name, :app_path, :database do
     shell %{ echo 'every 1.week do' >> /root/Backup/config/schedule.rb }
     shell %{ echo '  command "backup perform -t #{app_name}"' >> /root/Backup/config/schedule.rb }
     shell %{ echo 'end' >> /root/Backup/config/schedule.rb }
+    shell %{ cd /root/Backup }
     shell %{ whenever }
+    shell %{ whenever --update-crontab }
   }
  
 end
