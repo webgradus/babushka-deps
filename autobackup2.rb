@@ -4,9 +4,10 @@ dep 'autobackup2', :app_name, :app_path, :database do
   database.default("mysql").choose(%w[mysql postgresql mongodb])
   
   met? {
-    Babushka::Renderable.new("/root/Backup/models/" + app_name + ".rb").from?(dependency.load_path.parent / "autobackup/model_template.rb.erb")  }
+    print app_name
+    Babushka::Renderable.new("/root/Backup/models/" + app_name.to_s + ".rb").from?(dependency.load_path.parent / "autobackup/model_template.rb.erb")  }
   meet {
-    render_erb "autobackup/model_tamplate.rb.erb", :to => ("/root/Backup/models/" + app_name + ".rb").to_s
+    render_erb "autobackup/model_tamplate.rb.erb", :to => ("/root/Backup/models/" + app_name.to_s + ".rb").to_s
   }
 
   met? {
