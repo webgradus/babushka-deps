@@ -12,7 +12,7 @@ dep 'autobackup2', :app_name, :app_path, :database do
   requires "schedule2"
 end
 
-dep "schedule2", :app_name
+dep "schedule2", :app_name do
   met? {
     shell? %{ grep #{app_name} /root/Backup/config/schedule.rb}
   }
