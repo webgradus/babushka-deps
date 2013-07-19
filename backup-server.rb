@@ -7,7 +7,7 @@ dep 'backup-server' do
     log "whenever gem install..."
     shell "gem install whenever"
     shell "mkdir config", :cd => "/root/Backup/"
-    shell "wheneverize ."
+    shell "wheneverize .", :cd => "/root/Backup/"
 
     log "copy config file..."
     met? {
