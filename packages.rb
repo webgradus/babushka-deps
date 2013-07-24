@@ -2,13 +2,6 @@ dep 'imagemagick.managed' do
   provides %w[compare animate convert composite conjure import identify stream display montage mogrify]
 end
 
-dep 'readline.lib' do
-  installs {
-    on :lenny, 'libreadline5-dev'
-    via :apt, 'libreadline6-dev'
-  }  
-end
-
 dep 'libssl.lib' do
   installs {
     via :apt, 'libssl-dev'
@@ -33,6 +26,17 @@ dep 'ncurses.lib' do
   }  
 end
 
+dep 'readline.lib' do
+  installs {
+    on :lenny, 'libreadline5-dev'
+    via :apt, 'libreadline6-dev'
+  }  
+end
+
+dep 'rcconf.bin' do
+  requires 'whiptail.bin'
+end
+
 dep 'pcre.lib' do
   installs {
     via :brew, 'pcre'
@@ -42,6 +46,7 @@ dep 'pcre.lib' do
   }  
 end
 
+dep 'whiptail.bin'
 
 dep 'yaml.lib' do
   installs {
