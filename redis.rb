@@ -1,4 +1,5 @@
 dep 'redis', :version, :path do
+  requires 'tcl.bin'
   requires 'redis installed'.with(version, path)
   requires 'redis-init-script'
 end
