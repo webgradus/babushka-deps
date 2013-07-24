@@ -22,7 +22,7 @@ dep 'unicorn-init-script', :app_name, :app_type do
   meet {
     sudo "update-rc.d #{app_name} defaults"
   }
-  requires 'autobackup'.with(app_name)
+  requires 'autobackup'
 end
 
 dep 'start', :app_name, :app_type do
