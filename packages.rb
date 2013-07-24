@@ -46,6 +46,8 @@ dep 'pcre.lib' do
   }  
 end
 
+dep 'unzip.bin'
+
 dep 'whiptail.bin'
 
 dep 'yaml.lib' do
