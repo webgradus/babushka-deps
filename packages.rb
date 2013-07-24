@@ -26,6 +26,15 @@ dep 'ncurses.lib' do
   }  
 end
 
+dep 'pcre.lib' do
+  installs {
+    via :brew, 'pcre'
+    via :macports, 'pcre'
+    via :apt, 'libpcre3-dev'
+    via :yum, 'pcre-devel'
+  }  
+end
+
 dep 'readline.lib' do
   installs {
     on :lenny, 'libreadline5-dev'
@@ -37,14 +46,10 @@ dep 'rcconf.bin' do
   requires 'whiptail.bin'
 end
 
-dep 'pcre.lib' do
-  installs {
-    via :brew, 'pcre'
-    via :macports, 'pcre'
-    via :apt, 'libpcre3-dev'
-    via :yum, 'pcre-devel'
-  }  
+dep 'tcl.bin' do
+  installs { via :apt, 'tcl8.5' }
 end
+
 
 dep 'unzip.bin'
 
