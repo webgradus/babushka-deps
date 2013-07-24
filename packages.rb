@@ -48,6 +48,7 @@ end
 
 dep 'tcl.bin' do
   installs { via :apt, 'tcl8.5' }
+  provides 'tcl8.5'
 end
 
 
