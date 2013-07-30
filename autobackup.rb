@@ -8,9 +8,10 @@ dep 'autobackup', :app_name, :app_path, :database do
   }
   meet {
     render_erb "autobackup/model_template.rb.erb", :to => ("/root/Backup/models/" + app_name + ".rb").to_s
+    shell "backup perform -t #{app_name}"
   }
   requires "schedule".with(app_name)
-  shell "backup perform -t #{app_name}"
+  
 end
 
 dep "schedule", :app_name do
