@@ -30,7 +30,6 @@ role :db,  "<%= server_ip %>", :primary => true # This is where Rails migrations
 #after "deploy:update_code", :link_assets  # use this task for linking assets
 #after "deploy:update_code", :copy_uploads # use this task for copying assets
 before "deploy:assets:precompile", :copy_database_settings
-after "deploy:assets:precompile", :copy_backup_settings
 after 'deploy:update', 'foreman:export'
 
 task :link_assets, roles => :app do
@@ -46,11 +45,6 @@ end
 task :copy_database_settings, roles => :app do
   database = "#{shared_path}/database.yml"
   run "cp #{database} #{release_path}/config"
-end
-
-task :copy_backup_settings, roles => :app do
-  backup = "#{shared_path}/backup.yml"
-  run "cp #{backup} #{release_path}/config"
 end
 
 task :show_log do
