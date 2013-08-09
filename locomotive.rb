@@ -1,4 +1,5 @@
 dep 'locomotive.local', :host, :app_name do
+  requires 'rails.installed'.with("1.9.3")
   met? { "/opt/#{app_name}".p.exists? }
     
   meet {
