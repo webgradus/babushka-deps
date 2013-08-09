@@ -4,7 +4,7 @@ dep 'locomotive.local', :host, :app_name do
     
   meet {
     cd "/opt" do
-      shell "rvm use 1.9.3 do rails new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
+      shell "rvm use 1.9.3 do rails _3.2.13_ new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
       cd "/opt/#{app_name}" do
         shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
         shell %{echo 'gem "locomotive_cms", "~> 2.2.1", :require => "locomotive/engine"' >> Gemfile}
