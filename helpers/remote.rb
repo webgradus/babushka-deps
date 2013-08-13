@@ -17,7 +17,7 @@ def remote_shell *cmd
       cmd.map {|i| i.sub(/^(.{50})(.{3}).*/m, '\1...') }.join(' ') # the command, with long args truncated
     ].join(' $ ')
     log opening_message, :closing_status => opening_message do
-      shell "ssh", "-A --login", host_spec, cmd.map{|i| "'#{i}'" }.join(' '), :log => true
+      shell "ssh", "-A", host_spec, cmd.map{|i| "'#{i}'" }.join(' '), :log => true
     end
 end
 
