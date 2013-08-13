@@ -11,7 +11,7 @@ def rvm_installed?
 end
 
 def rvm_run cmd    
-    log_shell("rvm_run: #{cmd}", rvm_script + " " + cmd)    
+    log_shell("rvm_run: #{cmd}", "source /usr/local/rvm/scripts/rvm; " + rvm_script + " " + cmd)    
 end
 
 def current_rubies
