@@ -7,8 +7,11 @@ def as user, &block
     @user = previous_user
 end
 
+def host_spec
+    "#{@user || 'root'}@#{host}"
+end
+
 def remote_shell *cmd
-    host_spec = "#{@user || 'root'}@#{host}"
     opening_message = [
       host_spec.colorize("on grey"), # user@host spec
       cmd.map {|i| i.sub(/^(.{50})(.{3}).*/m, '\1...') }.join(' ') # the command, with long args truncated
