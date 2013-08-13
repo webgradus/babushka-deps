@@ -5,7 +5,6 @@ dep 'locomotive.local', :host, :app_name do
     
   meet {
     cd "/opt" do
-      source_rvm
       rvm_run "use 1.9.3 do rails _3.2.13_ new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
       cd "/opt/#{app_name}" do
         shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
@@ -28,7 +27,7 @@ dep 'locomotive.local', :host, :app_name do
 end
 
 dep 'locomotive', :host, :app_name, :port do
-  host.ask("Where to deploy LocomotiveCMS")
+  host.ask("Where to deploy LocomotiveCMS (IP or domain)")
   app_name.ask("App or site name that will be located at /opt")
   port.ask("HTTP Port for configuring NGINX server")
   met? {
