@@ -1,3 +1,7 @@
+def source_rvm
+    log_shell("sourcing rvm", "source /usr/local/rvm/scripts/rvm")
+end
+
 def rvm_script
     "/usr/local/rvm/scripts/rvm"
 end
