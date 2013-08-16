@@ -19,10 +19,12 @@ test:
 
 # set these environment variables on your prod server
 production:
-  <<: *defaults
+  # <<: *defaults
   sessions:
     default:
       database: <%= app_name %>_prod
+      hosts:
+        - localhost:27017
 
   # other settings for production
   # host: <%= ENV['MONGOID_HOST'] %>
