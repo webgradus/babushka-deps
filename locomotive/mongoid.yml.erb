@@ -1,6 +1,8 @@
 defaults: &defaults
-  host: localhost
-  port: 27017
+  sessions:
+    default:
+      hosts:
+        - localhost:27017
   # slaves:
   #   - host: slave1.local
   #     port: 27018
@@ -18,7 +20,9 @@ test:
 # set these environment variables on your prod server
 production:
   # <<: *defaults
-  database: <%= app_name %>_prod
+  sessions:
+    default:
+      database: <%= app_name %>_prod
 
   # other settings for production
   # host: <%= ENV['MONGOID_HOST'] %>
