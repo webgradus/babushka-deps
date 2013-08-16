@@ -26,9 +26,10 @@ dep 'unicorn-init-script', :app_name, :app_type, :database do
   requires 'autobackup'.with(app_name, "/opt/#{app_name}", database)
 end
 
-dep 'start', :app_name, :app_type do
+dep 'start', :app_name, :app_type, :database do
   app_type.default!('rails')
-  requires 'unicorn-init-script'.with(app_name, app_type)
+  database.default!('mysql')
+  requires 'unicorn-init-script'.with(app_name, app_type, database)
   met? {
     app_type == 'rails' ? "/opt/#{app_name}/current/tmp/pids/unicorn.pid".p.exists? : "/opt/#{app_name}/tmp/pids/unicorn.pid".p.exists?
   }
