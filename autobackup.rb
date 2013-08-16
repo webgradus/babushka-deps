@@ -1,4 +1,5 @@
 dep 'autobackup', :app_name, :app_path, :database do
+  requires 'backup-server'
   app_name.ask("What is the name of application?")
   app_path.default!("")
   database.default("mysql").choose(%w[mysql postgresql mongodb])
