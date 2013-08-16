@@ -1,6 +1,6 @@
 # use this deop ONLY on server cause it uses rvm_run
 dep 'locomotive.local', :host, :app_name do
-  requires 'rvm', 'rails installed'.with("1.9.3")
+  requires 'rvm', 'rails installed'.with("1.9.3", "3.2.13")
   met? { "/opt/#{app_name}".p.exists? }
 
   meet {
