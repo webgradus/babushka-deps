@@ -1,11 +1,11 @@
-dep 'unicorn-init-script copied', :app_name, :app_type do  
-  met? {    
+dep 'unicorn-init-script copied', :app_name, :app_type do
+  met? {
     Babushka::Renderable.new("/etc/init.d/#{app_name}").from?(dependency.load_path.parent / "init/init.sh.erb")
   }
-  meet {    
-    render_erb "init/init.sh.erb", :to => "/etc/init.d/#{app_name}", :perms => '755', :sudo => true    
+  meet {
+    render_erb "init/init.sh.erb", :to => "/etc/init.d/#{app_name}", :perms => '755', :sudo => true
   }
-  
+
 end
 
 dep 'unicorn-init-script', :app_name, :app_type do
@@ -22,7 +22,7 @@ dep 'unicorn-init-script', :app_name, :app_type do
   meet {
     sudo "update-rc.d #{app_name} defaults"
   }
-  requires 'autobackup'
+  requires 'autobackup'.with(app_name, "/opt/#{app_name}")
 end
 
 dep 'start', :app_name, :app_type do

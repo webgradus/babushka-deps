@@ -2,7 +2,7 @@ dep 'autobackup', :app_name, :app_path, :database do
   app_name.ask("What is the name of application?")
   app_path.default!("")
   database.default("mysql").choose(%w[mysql postgresql mongodb])
-  
+
   met? {
     Babushka::Renderable.new("/root/Backup/models/" + app_name + ".rb").from?(dependency.load_path.parent / "autobackup/model_template.rb.erb")
   }
@@ -11,7 +11,7 @@ dep 'autobackup', :app_name, :app_path, :database do
     shell "backup perform -t #{app_name}"
   }
   requires "schedule".with(app_name)
-  
+
 end
 
 dep "schedule", :app_name do
@@ -25,5 +25,5 @@ dep "schedule", :app_name do
     shell %{ echo 'end' >> /root/Backup/config/schedule.rb }
     shell "whenever", :cd => '/root/Backup/'
     shell "whenever --update-crontab", :cd => '/root/Backup/'
-  } 
+  }
 end
