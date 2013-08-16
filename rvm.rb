@@ -7,7 +7,7 @@ dep 'rvm_requirements.lib' do
 end
 
 # alias for "rvm configured"
-dep 'rvm' do 
+dep 'rvm' do
   requires 'rvm configured'
 end
 
@@ -34,14 +34,15 @@ dep 'rvm installed' do
 
   meet {
     shell 'curl -L https://get.rvm.io | bash -s stable'
+    shell "echo 'source /usr/local/rvm/scripts/rvm' >> ~/.bashrc"
   }
 end
 
-# ensure a default ruby is set 
+# ensure a default ruby is set
 dep 'rvm default ruby is set', :default_ruby do
   requires 'rvm installed', 'rvm_requirements.lib'
-  default_ruby.ask("Which ruby do you what to use as default?").choose(current_rubies)  
-  
+  default_ruby.ask("Which ruby do you what to use as default?").choose(current_rubies)
+
   met?{rvm_run("current")[/system/] == nil}
 
   meet do
@@ -54,8 +55,8 @@ dep 'rvm default ruby is set', :default_ruby do
     else
       default_ruby = default_ruby
     end
-    
-    rvm_run("use #{default_ruby} --default") 
+
+    rvm_run("use #{default_ruby} --default")
   end
 end
 
