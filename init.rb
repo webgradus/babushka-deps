@@ -8,9 +8,10 @@ dep 'unicorn-init-script copied', :app_name, :app_type do
 
 end
 
-dep 'unicorn-init-script', :app_name, :app_type do
+dep 'unicorn-init-script', :app_name, :app_type, :database do
   app_name.ask("What is the name of application located at /opt")
   app_type.default('rails').choose(%w[rails locomotive])
+  database.default!('mysql')
   requires 'unicorn-init-script copied'.with(app_name, app_type)
   requires 'rcconf.bin'
   if app_type == 'rails'
@@ -22,7 +23,7 @@ dep 'unicorn-init-script', :app_name, :app_type do
   meet {
     sudo "update-rc.d #{app_name} defaults"
   }
-  requires 'autobackup'.with(app_name, "/opt/#{app_name}", nil)
+  requires 'autobackup'.with(app_name, "/opt/#{app_name}", database)
 end
 
 dep 'start', :app_name, :app_type do
