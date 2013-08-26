@@ -1,6 +1,7 @@
 dep 'backup-server' do
     met? {
-        Babushka::Renderable.new("~/Backup/config.rb").from?(dependency.load_path.parent / "backup-server/config.rb.erb")
+        "~/Backup".p.exists?
+        # Babushka::Renderable.new("~/Backup/config.rb").from?(dependency.load_path.parent / "backup-server/config.rb.erb")
     }
     meet {
         log "backup gem install..."
