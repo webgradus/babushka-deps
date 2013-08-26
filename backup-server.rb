@@ -4,14 +4,16 @@ dep 'backup-server' do
     }
     meet {
         log "backup gem install..."
-        shell "gem install backup"
-        shell "backup generate:config"
+        rvm_run_with_ruby "2.0.0", "gem install backup"
+        rvm_run_with_ruby "2.0.0", "backup generate:config"
         shell "mkdir models", :cd => "~/Backup/"
 
         log "whenever gem install..."
-        shell "gem install whenever"
+        rvm_run_with_ruby "2.0.0", "gem install whenever"
         shell "mkdir config", :cd => "~/Backup/"
-        shell "wheneverize .", :cd => "~/Backup/"
+        cd "~/Backup/" do
+            rvm_run_with_ruby "2.0.0", "wheneverize ."
+        end
 
         log "copy config file..."
         render_erb "backup-server/config.rb.erb", :to => ("~/Backup/config.rb").to_s
