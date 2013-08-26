@@ -45,7 +45,7 @@ require 'yaml'
 # Set default options to be applied to components in all models.
 # Options set within a model will override those set here.
 #
-backupconfig = YAML::load(ERB.new(IO.read(File.join('/root','Backup','config', 'backup.yml'))).result)
+backupconfig = YAML::load(ERB.new(IO.read(File.join('~','Backup','config', 'backup.yml'))).result)
 
    Backup::Storage::S3.defaults do |s3|
      s3.access_key_id     = backupconfig['s3']['access_key_id']
