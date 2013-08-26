@@ -12,11 +12,11 @@ dep 'autobackup', :app_name, :app_path, :database, :ruby_version_for_backup_scri
     render_erb "autobackup/model_template.rb.erb", :to => ("~/Backup/models/" + app_name + ".rb").to_s
     rvm_run_with_ruby ruby_version_for_backup_script, "backup perform -t #{app_name}"
   }
-  requires "schedule".with(app_name)
+  requires "schedule".with(app_name, ruby_version_for_backup_script)
 
 end
 
-dep "schedule", :app_name do
+dep "schedule", :app_name, :ruby_version_for_backup_script do
 
   met? {
     shell? %{ grep #{app_name} ~/Backup/config/schedule.rb}
