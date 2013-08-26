@@ -1,19 +1,20 @@
-dep 'backup-server' do
+dep 'backup-server', :ruby_version do
+    ruby_version.default("2.0.0").choose(%w[2.0.0 1.9.3])
     met? {
         "~/Backup".p.exists?
         # Babushka::Renderable.new("~/Backup/config.rb").from?(dependency.load_path.parent / "backup-server/config.rb.erb")
     }
     meet {
         log "backup gem install..."
-        rvm_run_with_ruby "2.0.0", "gem install backup"
-        rvm_run_with_ruby "2.0.0", "backup generate:config"
+        rvm_run_with_ruby ruby_version, "gem install backup"
+        rvm_run_with_ruby ruby_version, "backup generate:config"
         shell "mkdir models", :cd => "~/Backup/"
 
         log "whenever gem install..."
-        rvm_run_with_ruby "2.0.0", "gem install whenever"
+        rvm_run_with_ruby ruby_version, "gem install whenever"
         shell "mkdir config", :cd => "~/Backup/"
         cd "~/Backup/" do
-            rvm_run_with_ruby "2.0.0", "wheneverize ."
+            rvm_run_with_ruby ruby_version, "wheneverize ."
         end
 
         log "copy config file..."
