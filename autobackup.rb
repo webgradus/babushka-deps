@@ -23,7 +23,7 @@ dep "schedule", :app_name, :ruby_version_for_backup_script do
   }
   meet {
     shell %{ echo 'every 1.week do' >> ~/Backup/config/schedule.rb }
-    shell %{ echo '  command "backup perform -t #{app_name}"' >> ~/Backup/config/schedule.rb }
+    shell %{ echo '  command "rvm use #{ruby_version_for_backup_script} do backup perform -t #{app_name}"' >> ~/Backup/config/schedule.rb }
     shell %{ echo 'end' >> ~/Backup/config/schedule.rb }
     cd '~/Backup/' do
       rvm_run_with_ruby ruby_version_for_backup_script, "whenever"
