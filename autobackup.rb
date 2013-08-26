@@ -9,7 +9,7 @@ dep 'autobackup', :app_name, :app_path, :database do
   }
   meet {
     render_erb "autobackup/model_template.rb.erb", :to => ("~/Backup/models/" + app_name + ".rb").to_s
-    shell "backup perform -t #{app_name}"
+    rvm_run_with_ruby "2.0.0", "backup perform -t #{app_name}"
   }
   requires "schedule".with(app_name)
 
@@ -18,13 +18,15 @@ end
 dep "schedule", :app_name do
 
   met? {
-    shell? %{ grep #{app_name} /root/Backup/config/schedule.rb}
+    shell? %{ grep #{app_name} ~/Backup/config/schedule.rb}
   }
   meet {
     shell %{ echo 'every 1.week do' >> ~/Backup/config/schedule.rb }
     shell %{ echo '  command "backup perform -t #{app_name}"' >> ~/Backup/config/schedule.rb }
     shell %{ echo 'end' >> ~/Backup/config/schedule.rb }
-    shell "whenever", :cd => '~/Backup/'
-    shell "whenever --update-crontab", :cd => '~/Backup/'
+    cd '~/Backup/' do
+      rvm_run_with_ruby "2.0.0", "whenever"
+      rvm_run_with_ruby "2.0.0", "whenever --update-crontab"
+    end
   }
 end
