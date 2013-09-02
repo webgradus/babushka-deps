@@ -8,7 +8,7 @@ dep 'unicorn-init-script copied', :app_name, :app_type do
 
 end
 
-dep 'unicorn-init-script', :app_name, :app_type, :database do
+dep 'unicorn-init-script', :app_name, :app_type, :database, :ruby_version do
   app_name.ask("What is the name of application located at /opt")
   app_type.default('rails').choose(%w[rails locomotive])
   ruby_version.default('2.0.0').choose(%w[1.9.3 2.0.0])
