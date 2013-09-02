@@ -30,7 +30,7 @@ end
 dep 'start', :app_name, :app_type, :database do
   app_type.default!('rails')
   database.default!('mysql')
-  requires 'unicorn-init-script'.with(app_name, app_type, database)
+  requires 'unicorn-init-script'.with(app_name, app_type, database, '2.0.0') # ruby version for backup gem
   met? {
     app_type == 'rails' ? "/opt/#{app_name}/current/tmp/pids/unicorn.pid".p.exists? : "/opt/#{app_name}/tmp/pids/unicorn.pid".p.exists?
   }
