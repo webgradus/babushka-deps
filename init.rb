@@ -24,7 +24,7 @@ dep 'unicorn-init-script', :app_name, :app_type, :database do
   meet {
     sudo "update-rc.d #{app_name} defaults"
   }
-  requires 'autobackup'.with(app_name, "/opt/#{app_name}", database)
+  requires 'autobackup'.with(app_name, "/opt/#{app_name}", database, ruby_version)
 end
 
 dep 'start', :app_name, :app_type, :database do
