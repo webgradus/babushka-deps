@@ -11,6 +11,7 @@ end
 dep 'unicorn-init-script', :app_name, :app_type, :database do
   app_name.ask("What is the name of application located at /opt")
   app_type.default('rails').choose(%w[rails locomotive])
+  ruby_version.default('2.0.0').choose(%w[1.9.3 2.0.0])
   database.default!('mysql')
   requires 'unicorn-init-script copied'.with(app_name, app_type)
   requires 'rcconf.bin'
