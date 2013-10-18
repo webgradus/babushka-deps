@@ -4,6 +4,7 @@ Backup::Model.new(:<%= app_name %>_archives, "Backup of <%= app_name %>'s archiv
 
   archive :public do |archive|
       archive.add '/opt/<%=app_name%>/shared/assets/'
+      archive.add '/opt/<%=app_name%>/shared/spree/'
       archive.add '/opt/<%=app_name%>/shared/system/'
       archive.add '/opt/<%=app_name%>/current/public/'
       archive.add '/opt/<%=app_name%>/public/'
