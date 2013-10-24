@@ -1,14 +1,14 @@
 # use this deop ONLY on server cause it uses rvm_run
 dep 'locomotive.local', :host, :app_name do
-  requires 'rvm', 'rails installed'.with("1.9.3", "3.2.13")
+  requires 'rvm', 'rails installed'.with("1.9.3", "3.2.15")
   met? { "/opt/#{app_name}".p.exists? }
 
   meet {
     cd "/opt" do
-      rvm_run_with_ruby "1.9.3", "rails _3.2.13_ new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
+      rvm_run_with_ruby "1.9.3", "rails _3.2.15_ new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
       cd "#{app_name}", :create => true do
         shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
-        shell %{echo 'gem "locomotive_cms", "~> 2.2.1", :require => "locomotive/engine"' >> Gemfile}
+        shell %{echo 'gem "locomotive_cms", "~> 2.2.3", :require => "locomotive/engine"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "compass-rails", "~> 1.0.2", :group => "assets"' >> Gemfile}
         shell %{echo 'gem "therubyracer", ">= 0.8.2"' >> Gemfile}
