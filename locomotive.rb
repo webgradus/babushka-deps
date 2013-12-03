@@ -1,26 +1,26 @@
 # use this deop ONLY on server cause it uses rvm_run
 dep 'locomotive.local', :host, :app_name do
-  requires 'rvm', 'rails installed'.with("1.9.3", "3.2.15")
+  requires 'rvm', 'rails installed'.with("2.0.0", "3.2.15")
   met? { "/opt/#{app_name}".p.exists? }
 
   meet {
     cd "/opt" do
-      rvm_run_with_ruby "1.9.3", "rails _3.2.15_ new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
+      rvm_run_with_ruby "2.0.0", "rails _3.2.15_ new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
       cd "#{app_name}", :create => true do
-        shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
-        shell %{echo 'gem "locomotive_cms", "~> 2.2.3", :require => "locomotive/engine"' >> Gemfile}
+        shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 2.0.0' > .rvmrc"
+        shell %{echo 'gem "locomotive_cms", "~> 2.3.1", :require => "locomotive/engine"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "compass-rails", "~> 1.0.2", :group => "assets"' >> Gemfile}
         shell %{echo 'gem "therubyracer", ">= 0.8.2"' >> Gemfile}
         log "bundle install..."
-        rvm_run_with_ruby "1.9.3", "bundle install"
+        rvm_run_with_ruby "2.0.0", "bundle install"
         log "running locomotive generator..."
-        rvm_run_with_ruby "1.9.3", "bundle exec rails g locomotive:install"
+        rvm_run_with_ruby "2.0.0", "bundle exec rails g locomotive:install"
         render_erb "locomotive/locomotive.rb.erb", :to => "/opt/#{app_name}/config/initializers/locomotive.rb", :sudo => true
         render_erb "locomotive/mongoid.yml.erb", :to => "/opt/#{app_name}/config/mongoid.yml", :sudo => true
         render_erb "locomotive/carrierwave.rb.erb", :to => "/opt/#{app_name}/config/initializers/carrierwave.rb", :sudo => true
         log "precompiling assets..."
-        rvm_run_with_ruby "1.9.3", "bundle exec rake assets:precompile"
+        rvm_run_with_ruby "2.0.0", "bundle exec rake assets:precompile"
       end
     end
   }
@@ -49,9 +49,9 @@ dep 'locomotive', :host, :app_name, :port do
 end
 
 dep 'wagon' do
-  met? { shell? "rvm use 1.9.3 do wagon version" }
+  met? { shell? "rvm use 2.0.0 do wagon version" }
   meet {
-    shell "rvm use 1.9.3 do gem install locomotivecms_wagon"
+    shell "rvm use 2.0.0 do gem install locomotivecms_wagon"
   }
 end
 
@@ -61,12 +61,12 @@ dep 'wagon site', :site_name do
   site_path = (shell "pwd") / site_name
   met? { site_path.exists? }
   meet {
-    shell "rvm use 1.9.3 do wagon init #{site_name}"
+    shell "rvm use 2.0.0 do wagon init #{site_name}"
     log "created a site..."
     cd "#{site_path.to_s}" do
-      shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 1.9.3' > .rvmrc"
+      shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 2.0.0' > .rvmrc"
       log "making 'bundle install' in #{site_path.to_s}..."
-      shell "rvm use 1.9.3 do bundle install"
+      shell "rvm use 2.0.0 do bundle install"
     end
   }
 end
