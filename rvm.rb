@@ -33,7 +33,7 @@ dep 'rvm installed' do
   }
 
   meet {
-    shell 'curl -sSL https://get.rvm.io | bash -s stable'
+    shell 'sudo curl -sSL https://get.rvm.io | bash -s stable'
     shell "echo 'source /usr/local/rvm/scripts/rvm' >> ~/.bashrc"
     shell "source /usr/local/rvm/scripts/rvm"
   }
