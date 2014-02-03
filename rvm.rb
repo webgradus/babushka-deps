@@ -57,7 +57,7 @@ dep 'rvm default ruby is set', :default_ruby do
       default_ruby = default_ruby
     end
 
-    rvm_run("use #{default_ruby} --default")
+    rvm_run("alias create default #{default_ruby}")
   end
 end
 
