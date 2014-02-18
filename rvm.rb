@@ -41,7 +41,7 @@ end
 
 # ensure a default ruby is set
 dep 'rvm default ruby is set', :default_ruby do
-  requires 'sh is bash', 'rvm installed', 'rvm_requirements.lib'
+  requires 'rvm installed', 'rvm_requirements.lib'
   default_ruby.ask("Which ruby do you what to use as default?").choose(current_rubies)
 
   met?{rvm_run("current")[/system/] == nil}
