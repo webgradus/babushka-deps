@@ -1,5 +1,5 @@
 def rvm_script
-    "rvm"#"/usr/local/rvm/scripts/rvm"
+    "/usr/local/rvm/scripts/rvm"
 end
 
 def rvm_installed?
