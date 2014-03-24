@@ -52,7 +52,7 @@ backupconfig = YAML::load(ERB.new(IO.read(File.join('/root','Backup','config', '
      s3.secret_access_key = backupconfig['s3']['secret_access_key_id']
      s3.bucket            = backupconfig['s3']['bucket']
      s3.region            = "us-east-1"
-     s3.keep              = 10 
+     s3.keep              = 5 
    end
 
    Backup::Notifier::Mail.defaults do |mail|
