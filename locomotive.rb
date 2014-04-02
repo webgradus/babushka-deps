@@ -11,7 +11,7 @@ dep 'locomotive.local', :host, :app_name do
         shell %{echo 'gem "locomotive_cms", "~> 2.4.1", :require => "locomotive/engine"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "compass-rails", "~> 1.1.3", :group => "assets"' >> Gemfile}
-        shell %{echo 'gem "therubyracer", :platforms => :ruby' >> Gemfile}
+        shell %{echo 'gem "therubyracer", ">= 0.9.9"' >> Gemfile}
         log "bundle install..."
         rvm_run_with_ruby "2.0.0", "bundle install"
         log "running locomotive generator..."
