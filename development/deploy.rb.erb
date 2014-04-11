@@ -77,17 +77,17 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   
   desc "Zero-downtime restart of Unicorn"
-  task :restart, :except => { :no_release => true } do
+  task :restart do
     foreman.restart
   end
 
   desc "Start unicorn"
-  task :start, :except => { :no_release => true } do
+  task :start do
     foreman.start
   end
 
   desc "Stop unicorn"
-  task :stop, :except => { :no_release => true } do
+  task :stop do
     foreman.stop
   end
 end
