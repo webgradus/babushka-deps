@@ -8,10 +8,13 @@ dep 'prepare-deploy', :app_name, :git_username, :server_ip, :app_path, :app_type
   use_faye.default('no').choose(%w[yes no])
   requires 'foreman'.with(app_path, use_faye)
   met? {
-    Babushka::Renderable.new(app_path / "config/deploy.rb").from?(dependency.load_path.parent / "development/deploy.rb.erb") && Babushka::Renderable.new(app_path / "config/unicorn.rb").from?(dependency.load_path.parent / "development/unicorn.rb.erb")
+    Babushka::Renderable.new(app_path / "config/deploy.rb").from?(dependency.load_path.parent / "development/deploy.rb.erb") && 
+    Babushka::Renderable.new(app_path / "config/unicorn.rb").from?(dependency.load_path.parent / "development/unicorn.rb.erb") &&
+    Babushka::Renderable.new(app_path / "config/deploy/production.rb").from?(dependency.load_path.parent / "development/deploy/production.rb.erb")
   }
   meet {
     render_erb "development/deploy.rb.erb", :to => (app_path / "config/deploy.rb").to_s
+    render_erb "development/deploy/production.rb.erb", :to => (app_path / "config/deploy/production.rb").to_s
     render_erb "development/unicorn.rb.erb", :to => (app_path / "config/unicorn.rb").to_s
   }
 end
