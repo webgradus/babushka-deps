@@ -1,81 +1,56 @@
-require "bundler/capistrano"
-
-#set :whenever_command, "bundle exec whenever" # uncomment this if you need whenever integration
-#require "whenever/capistrano"                 # uncomment this if you need whenever integration
-
-load 'deploy/assets'
-set :rvm_ruby_string, '<%= ruby_version %>'
-# Load RVM's capistrano plugin.
-require "rvm/capistrano"
-set :rvm_type, :system
+# !!!config valid only for Capistrano 3.1!!!
+lock '3.1.0'
 
 set :application, "<%= app_name %>"
-set :repository,  "ssh://<%= git_username %>@gitent-scm.com/git/gradus/#{application}"
+set :repo_url, "ssh://<%= git_username %>@gitent-scm.com/git/gradus/#{fetch(:application)}"
 
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
+
+set :deploy_to, "/opt/#{fetch(:application)}"
 set :scm, :git
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
-dpath = "/opt/#{application}"
-set :user, "root"
-set :use_sudo, false
 set :ssh_options, :forward_agent => true
-set :deploy_to, dpath
 set :rails_env, "production"
-set :rake, "bundle exec rake"
+set :unicorn_config_path, -> { File.join(current_path, "config", "unicorn.rb") }
+set :unicorn_pid, -> { File.join(shared_path, "tmp", "pids", "unicorn.pid") }
+
+# set :format, :pretty
+# set :log_level, :debug
+# set :pty, true
+# set :user, "root"
+# set :use_sudo, false
+
+set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{log tmp/pids tmp/sockets public/spree}
+
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
 
-role :web, "<%= server_ip %>"                          # Your HTTP server, Apache/etc
-role :app, "<%= server_ip %>"                          # This may be the same as your `Web` server
-role :db,  "<%= server_ip %>", :primary => true # This is where Rails migrations will run
-
-#after "deploy:update_code", :link_assets  # use this task for linking assets
-#after "deploy:update_code", :copy_uploads # use this task for copying assets
-before "deploy:assets:precompile", :copy_database_settings
-after 'deploy:update', 'foreman:export'
-
-task :link_assets, roles => :app do
-  assets_path = "#{shared_path}/assets"
-  run "ln -s #{assets_path} #{release_path}/public/assets"
-end
-
-task :copy_uploads, roles => :app do
-  uploads_path = "#{previous_release}/public/uploads"
-  run "cp -r #{uploads_path} #{release_path}/public"
-end
-
-task :copy_database_settings, roles => :app do
-  database = "#{shared_path}/database.yml"
-  run "cp #{database} #{release_path}/config"
-end
-
-task :show_log do
-  run "tail -f #{current_path}/log/#{rails_env}.log"
-end
-
-set :unicorn_conf, "#{current_path}/config/unicorn.rb"
-set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
+# ----- RVM ----------
+set :rvm_type, :system
+set :rvm_ruby_version, '<%= ruby_version %>'
 
 # - for unicorn - #
 namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
   task :export, :roles => :app do
     run "cd #{current_path} && bundle exec foreman export initscript /etc/init.d " +
-    "-f ./Procfile.production -a #{application} -u #{user} -l #{shared_path}/log" rescue nil
-    run "chmod 755 /etc/init.d/#{application}"
+    "-f ./Procfile.production -a #{fetch(:application)} -u #{user} -l #{shared_path}/log" rescue nil
+    run "chmod 755 /etc/init.d/#{fetch(:application)}"
   end
 
   desc "Start the application services"
   task :start, :roles => :app do
-    sudo "/etc/init.d/#{application} start"
+    sudo "/etc/init.d/#{fetch(:application)} start"
   end
 
   desc "Stop the application services"
   task :stop, :roles => :app do
-    sudo "/etc/init.d/#{application} stop"
+    sudo "/etc/init.d/#{fetch(:application)} stop"
   end
 
   desc "Restart the application services"
   task :restart, :roles => :app do
-    sudo "/etc/init.d/#{application} stop; /etc/init.d/#{application} start"
+    sudo "/etc/init.d/#{fetch(:application)} stop; /etc/init.d/#{fetch(:application)} start"
   end
 
   desc "Display logs for a certain process - arg example: PROCESS=web-1"
@@ -87,6 +62,10 @@ end
 # deploy with foreman#
 #
 namespace :deploy do
+
+  after :publishing, 'foreman:export'
+  after :finishing, 'deploy:cleanup'
+  
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
     foreman.restart
