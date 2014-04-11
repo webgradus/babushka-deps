@@ -4,7 +4,7 @@ dep 'prepare-deploy', :app_name, :git_username, :server_ip, :app_path, :app_type
   server_ip.ask('Where to deploy - I need IP')
   app_type.default('rails').choose(%w[rails locomotive])
   app_path.default!("")
-  ruby_version.default("2.0.0").choose(%w[2.0.0 1.9.3])
+  ruby_version.default("2.1.0").choose(%w[2.1.0 2.0.0 1.9.3])
   use_faye.default('no').choose(%w[yes no])
   requires 'foreman'.with(app_path, use_faye)
   met? {
