@@ -16,7 +16,7 @@ set :unicorn_pid, -> { File.join(shared_path, "tmp", "pids", "unicorn.pid") }
 # set :format, :pretty
 # set :log_level, :debug
 # set :pty, true
-# set :user, "root"
+set :user, "root"
 # set :use_sudo, false
 
 set :linked_files, %w{config/database.yml}
