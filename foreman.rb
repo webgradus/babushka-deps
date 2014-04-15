@@ -8,7 +8,7 @@ dep 'foreman', :app_path, :use_faye do
     render_erb "foreman/Procfile.production.erb", :to => (app_path / "Procfile.production").to_s
     cd app_path do
         shell %{echo 'gem "foreman"' >> Gemfile}
-        shell %{echo 'gem "foreman-export-initscript", :git => "git://github.com/mixan946/foreman-export-initscript.git"' >> Gemfile}
+        shell %{echo 'gem "foreman-export-initscript", :github => "webgradus/foreman-export-initscript"' >> Gemfile}
         shell %{bundle install}
     end
     foreman_in_gemfile = shell? %{grep "foreman" Gemfile}, :cd => app_path
