@@ -20,7 +20,7 @@ deploy_to = "/opt/#{app_name}"
 
 shared_bundler_gems_path = "#{shared_path}/bundle"
 
-Unicorn::HttpServer::START_CTX[0] = "#{shared_bundler_gems_path}/ruby/1.9.1/bin/unicorn_rails"
+Unicorn::HttpServer::START_CTX[0] = "#{shared_bundler_gems_path}/ruby/<%= ruby_version %>/bin/unicorn_rails"
 
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.
