@@ -34,9 +34,9 @@ namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
   task :export do
     on roles(:app) do
-      run "cd #{current_path} && bundle exec foreman export initscript /etc/init.d " +
+      execute "cd #{current_path} && bundle exec foreman export initscript /etc/init.d " +
       "-f ./Procfile.production -a #{fetch(:application)} -u #{user} -l #{shared_path}/log" rescue nil
-      run "chmod 755 /etc/init.d/#{fetch(:application)}"
+      execute "chmod 755 /etc/init.d/#{fetch(:application)}"
     end
   end
 
@@ -64,7 +64,7 @@ namespace :foreman do
   desc "Display logs for a certain process - arg example: PROCESS=web-1"
   task :logs do
     on roles(:app) do
-      run "cd #{current_path}/log && cat #{ENV["PROCESS"]}.log"
+      execute "cd #{current_path}/log && cat #{ENV["PROCESS"]}.log"
     end
   end
 end
