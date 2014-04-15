@@ -16,7 +16,7 @@ set :unicorn_pid, -> { File.join(shared_path, "tmp", "pids", "unicorn.pid") }
 # set :format, :pretty
 # set :log_level, :debug
 # set :pty, true
-set :user, "root"
+# set :user, "root"
 # set :use_sudo, false
 
 set :linked_files, %w{config/database.yml}
@@ -35,7 +35,7 @@ namespace :foreman do
   task :export do
     on roles(:app) do
       execute "cd #{current_path} && bundle exec foreman export initscript /etc/init.d " +
-      "-f ./Procfile.production -a #{fetch(:application)} -u #{user} -l #{shared_path}/log" rescue nil
+      "-f ./Procfile.production -a #{fetch(:application)} -u #{fetch(:user)} -l #{shared_path}/log"
       execute "chmod 755 /etc/init.d/#{fetch(:application)}"
     end
   end
@@ -74,21 +74,22 @@ end
 namespace :deploy do
 
   after :publishing, 'foreman:export'
+  after :publishing, :restart
   after :finishing, 'deploy:cleanup'
   
   desc "Zero-downtime restart of Unicorn"
   task :restart do
-    foreman.restart
+    invoke 'foreman:restart'
   end
 
   desc "Start unicorn"
   task :start do
-    foreman.start
+    invoke 'foreman:start'
   end
 
   desc "Stop unicorn"
   task :stop do
-    foreman.stop
+    invoke 'foreman:stop'
   end
 end
 
