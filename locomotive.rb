@@ -12,6 +12,7 @@ dep 'locomotive.local', :host, :app_name do
         shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "compass-rails", "~> 1.1.3", :group => "assets"' >> Gemfile}
         shell %{echo 'gem "therubyracer", ">= 0.9.9"' >> Gemfile}
+        shell "mkdir deploy", :cd => "/config/"
         log "bundle install..."
         rvm_run_with_ruby "2.0.0", "bundle install"
         log "running locomotive generator..."
