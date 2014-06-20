@@ -48,7 +48,7 @@ end
 
 dep 'postgres.apt_repository' do
   url "http://apt.postgresql.org/pub/repos/apt/"
-  distribution "squeeze-pgdg"
+  distribution "wheezy-pgdg"
   components "main"
 
   after do
@@ -65,7 +65,7 @@ dep 'postgres.managed', :version do
   requires_when_unmet 'postgres.apt_repository'
   met? { shell? "psql --version"  }
   meet {
-    shell("apt-get -y install -t squeeze-pgdg postgresql-#{version} libpq-dev")
+    shell("apt-get -y install -t wheezy-pgdg postgresql-#{version} libpq-dev")
   }
   
 end
