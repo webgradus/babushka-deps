@@ -1,5 +1,7 @@
 dep 'eye.running' do
-  requires 'eye.configured', 'eye.scripted'
+  hostname = shell("hostname")
+  requires 'eye.configured'.with(hostname)
+  requires 'eye.scripted'
   met? {
     shell("ps -ef | grep eye") {|shell| shell.stdout.include?("eye monitoring") }
   }
@@ -21,9 +23,8 @@ dep 'eye.installed' do
   }
 end
 
-dep 'eye.configured' do
+dep 'eye.configured', :hostname do
   requires 'eye.installed'
-  hostname = shell("hostname")
   met? {
     Babushka::Renderable.new("/root/eye/server.eye").from?(dependency.load_path.parent / "eye/server.eye.erb")
   }
