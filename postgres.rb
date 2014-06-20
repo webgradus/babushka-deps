@@ -61,7 +61,7 @@ dep 'postgres.managed', :version do
   version.default('9.3')
   # Assume the installed version if there is one
   #version.default!(shell('psql --version').val_for('psql (PostgreSQL)')[/^\d\.\d/]) if which('psql')
-  requires 'set.locale'
+  requires 'common:set.locale'.with("en_US")
   requires_when_unmet 'postgres.apt_repository'
   met? { shell? "psql --version"  }
   meet {
