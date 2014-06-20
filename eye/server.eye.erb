@@ -14,11 +14,33 @@ Eye.application '<%= hostname %>' do
     restart_grace 30.seconds
   end
   
-  process :postgresql do
-    start_command "service postgresql start"
-    restart_command "service postgresql restart"
-    stop_command "service postgresql stop"
+  group 'Storage' do
+  
+    process :postgresql do
+      start_command "service postgresql start"
+      restart_command "service postgresql restart"
+      stop_command "service postgresql stop"
 
-    restart_grace 30.seconds
+      restart_grace 30.seconds
+    end
+  
+    process :redis do
+      pid_file '/var/run/redis_6379.pid'
+      start_command "service redis_6379 start"
+      restart_command "service redis_6379 restart"
+      stop_command "service redis_6379 stop"
+
+      restart_grace 30.seconds
+    end
+  
+    process :mongodb do
+      pid_file '/var/run/mongodb.pid'
+      start_command "service mongodb start"
+      restart_command "service mongodb restart"
+      stop_command "service mongodb stop"
+
+      restart_grace 30.seconds
+    end
+    
   end
 end
