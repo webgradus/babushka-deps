@@ -36,9 +36,9 @@ Eye.application '<%= hostname %>' do
   
     process :mongodb do
       pid_file '/var/run/mongod.pid'
-      start_command "service mongodb start"
-      restart_command "service mongodb restart"
-      stop_command "service mongodb stop"
+      start_command "service mongod start"
+      restart_command "service mongod restart"
+      stop_command "service mongod stop"
 
       restart_grace 30.seconds
     end
