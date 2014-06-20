@@ -14,7 +14,7 @@ dep 'mongo.apt_repository' do
 end
 
 dep 'mongo.managed' do
-  installs { via :apt, 'mongodb-10gen' }
+  installs { via :apt, 'mongodb-org' }
   provides 'mongo'
   provides 'mongod'
 end
