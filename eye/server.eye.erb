@@ -5,6 +5,17 @@ Eye.config do
 end
 
 Eye.application '<%= hostname %>' do
+  
+  # Uncomment if FTP on server
+  #process :proftpd do
+  #  pid_file '/var/run/proftpd.pid'
+  #  start_command "/etc/init.d/proftpd start"
+  #  restart_command "/etc/init.d/proftpd restart"
+  #  stop_signals [:TERM, 10.seconds]
+    
+  #  restart_grace 30.seconds
+  #end
+  
   process :nginx do
     pid_file '/opt/nginx/logs/nginx.pid'
     start_command "service nginx start"
