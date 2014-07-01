@@ -55,4 +55,16 @@ Eye.application '<%= hostname %>' do
     end
     
   end
+  
+  group 'Apps' do
+    # Template for Rails Unicorn app
+    #process :app do
+    #  pid_file '/opt/app/shared/pids/unicorn.pid'
+    #  start_command "/etc/init.d/app start"
+    #  restart_command "/etc/init.d/app restart"
+    #  stop_command "/etc/init.d/app stop"
+
+    #  restart_grace 30.seconds
+    #end
+  end
 end
