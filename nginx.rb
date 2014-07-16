@@ -231,7 +231,7 @@ end
 dep 'unicorn-server', :app_name, :port, :app_type do
   app_type.default('rails').choose(%w[rails locomotive])
   requires 'unicorn-server available'.with(app_name, port, app_type)  
-  requires 'eye-process configured'.with(app_name)
+  requires 'eye-process.configured'.with(app_name, app_type)
   met? {
     "/opt/nginx/sites-enabled/#{app_name}".p.exists?    
   }
