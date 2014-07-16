@@ -46,3 +46,20 @@ dep 'eye.scripted' do
   }
 end
 
+dep 'eye-process.configured', :app_name, :app_type do
+  met? {
+    shell? "grep #{app_name} server.eye", :cd => "/root/eye"
+  }
+  meet {
+    cd "/root/eye" do
+        shell %Q{awk '/Apps/{print;print "process '#{app_name}' do 
+          pid_file '/opt/#{app_name}/shared/pids/unicorn.pid'
+          start_command "/etc/init.d/#{app_name} start"
+          restart_command "/etc/init.d/#{app_name} restart"
+          dtop_command "/etc/init.d/#{app_name} stop"
+          restart_grace 30.seconds
+          end";next}1' server.eye}
+    end
+  }
+end
+
