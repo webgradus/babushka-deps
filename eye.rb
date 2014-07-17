@@ -52,7 +52,7 @@ dep 'eye-process.configured', :app_name, :app_type do
   }
   meet {
     cd "/root/eye" do
-        shell %Q{p = "process '#{app_name}' do 
+        shell %Q{export p="process '#{app_name}' do 
           pid_file '/opt/#{app_name}/shared/pids/unicorn.pid'
           start_command '/etc/init.d/#{app_name} start'
           restart_command '/etc/init.d/#{app_name} restart'
