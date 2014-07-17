@@ -2,7 +2,7 @@ dep 'autobackup', :app_name, :app_path, :database, :ruby_version_for_backup_scri
   requires 'backup-server'
   app_name.ask("What is the name of application?")
   app_path.default!("")
-  database.default("mysql").choose(%w[mysql postgresql mongodb])
+  database.default("postgresql").choose(%w[mysql postgresql mongodb])
   ruby_version_for_backup_script.default("2.0.0").choose(%w[2.0.0 1.9.3])
 
   met? {
