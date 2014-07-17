@@ -53,13 +53,14 @@ dep 'eye-process.configured', :app_name, :app_type do
   meet {
     cd "/root/eye" do
         shell %Q{export p="process '#{app_name}' do 
-          pid_file #{app_type == 'rails' ? "'/opt/#{app_name}/shared/pids/unicorn.pid'" : "'/opt/#{app_name}/tmp/pids/unicorn.pid'"}
+          pid_file #{app_type == 'rails' ? "'/opt/#{app_name}/shared/tmp/pids/unicorn.pid'" : "'/opt/#{app_name}/tmp/pids/unicorn.pid'"}
           start_command '/etc/init.d/#{app_name} start'
           restart_command '/etc/init.d/#{app_name} restart'
           stop_command '/etc/init.d/#{app_name} stop'
           restart_grace 30.seconds
           end" && awk -v proc="$p" '/Apps/{print;print proc;next}1' server.eye > server.tmp && mv server.tmp server.eye}
     end
+    shell "/etc/init.d/eye restart" 
   }
 end
 
