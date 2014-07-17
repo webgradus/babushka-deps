@@ -58,7 +58,7 @@ dep 'eye-process.configured', :app_name, :app_type do
           restart_command '/etc/init.d/#{app_name} restart'
           dtop_command '/etc/init.d/#{app_name} stop'
           restart_grace 30.seconds
-          end" && awk -v proc="$p" '/Apps/{print;print proc;next}1' server.eye}
+          end" && awk -v proc="$p" '/Apps/{print;print proc;next}1' server.eye > server.tmp && mv server.tmp server.eye}
     end
   }
 end
