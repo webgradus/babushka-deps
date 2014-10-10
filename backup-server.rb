@@ -6,12 +6,12 @@ dep 'backup-server', :ruby_version do
     }
     meet {
         log "backup gem install..."
-        rvm_run_with_ruby ruby_version, "gem install backup"
+        rvm_run_with_ruby ruby_version, "gem install backup --no-rdoc --no-ri"
         rvm_run_with_ruby ruby_version, "backup generate:config"
         shell "mkdir models", :cd => "~/Backup/"
 
         log "whenever gem install..."
-        rvm_run_with_ruby ruby_version, "gem install whenever"
+        rvm_run_with_ruby ruby_version, "gem install whenever --no-rdoc --no-ri"
         shell "mkdir config", :cd => "~/Backup/"
         cd "~/Backup/" do
             rvm_run_with_ruby ruby_version, "wheneverize ."
