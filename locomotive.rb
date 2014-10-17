@@ -10,7 +10,7 @@ dep 'locomotive.local', :host, :app_name do
         shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 2.0.0' > .rvmrc"
         shell %{echo 'gem "locomotive_cms", "~> 2.5.6", :require => "locomotive/engine"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}
-        shell %{echo 'gem "compass-rails", "~> 1.1.3", :group => "assets"' >> Gemfile}
+        shell %{echo 'gem "compass-rails", "~> 2.0.0", :group => "assets"' >> Gemfile}
         shell %{echo 'gem "therubyracer", ">= 0.9.9"' >> Gemfile}
         log "bundle install..."
         rvm_run_with_ruby "2.0.0", "bundle install"
