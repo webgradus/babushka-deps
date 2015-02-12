@@ -65,7 +65,7 @@ dep 'wagon site', :site_name do
     shell "rvm use 2.0.0 do wagon init #{site_name}"
     log "created a site..."
     cd "#{site_path.to_s}" do
-      shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 2.0.0' > .rvmrc"
+      shell "echo '2.0.0' > .ruby-version"
       log "making 'bundle install' in #{site_path.to_s}..."
       shell "rvm use 2.0.0 do bundle install"
     end
