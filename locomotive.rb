@@ -7,7 +7,7 @@ dep 'locomotive.local', :host, :app_name do
     cd "/opt" do
       rvm_run_with_ruby "2.0.0", "rails _3.2.21_ new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
       cd "#{app_name}", :create => true do
-        shell "echo 'rvm_trust_rvmrcs_flag=1; rvm use 2.0.0' > .rvmrc"
+        shell "echo '2.0.0' > .ruby-version"
         shell %{echo 'gem "locomotive_cms", "~> 2.5.6", :require => "locomotive/engine"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "compass-rails", "~> 2.0.0", :group => "assets"' >> Gemfile}
