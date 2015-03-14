@@ -2,7 +2,7 @@
 lock '3.1.0'
 
 set :application, "<%= app_name %>"
-set :repo_url, "ssh://<%= git_username %>@gitent-scm.com/git/gradus/#{fetch(:application)}"
+set :repo_url, "git@gitlab.com:webgradus/#{fetch(:application)}.git"
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
