@@ -27,3 +27,13 @@ dep 'foreman.export', :app_path, :use_faye, :web_server do
       shell %{chmod 755 /etc/init.d/#{app_name}}
     end
 end
+
+dep 'foreman.start', :app_path, :use_faye, :web_server do
+  requires 'foreman.export'.with(app_path, use_faye, web_server)
+  app_name = app_path.split("/")[-1]
+  met? {
+    "/run/#{app_name}/web.1.pid".p.exists?
+  }
+  meet {
+    shell %{/etc/init.d/#{app_name} start}
+end
