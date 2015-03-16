@@ -26,6 +26,7 @@ dep 'foreman.export', :app_path, :use_faye, :web_server do
       shell %{bundle exec foreman export initscript /etc/init.d -f ./Procfile.production -a #{app_name} -u root}
       shell %{chmod 755 /etc/init.d/#{app_name}}
     end
+  }
 end
 
 dep 'foreman.start', :app_path, :use_faye, :web_server do
@@ -36,4 +37,5 @@ dep 'foreman.start', :app_path, :use_faye, :web_server do
   }
   meet {
     shell %{/etc/init.d/#{app_name} start}
+  }
 end
