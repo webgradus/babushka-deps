@@ -17,7 +17,7 @@ end
 
 dep 'foreman.export', :app_path, :use_faye, :web_server do
   requires 'foreman'.with(app_path, use_faye, web_server)
-  app_name = app_path.split("/")[-1]
+  app_name = app_path.to_s.split("/")[-1]
   met? {
     "/etc/init.d/#{app_name}".p.exists?
   }
@@ -31,7 +31,7 @@ end
 
 dep 'foreman.start', :app_path, :use_faye, :web_server do
   requires 'foreman.export'.with(app_path, use_faye, web_server)
-  app_name = app_path.split("/")[-1]
+  app_name = app_path.to_s.split("/")[-1]
   met? {
     "/run/#{app_name}/web.1.pid".p.exists?
   }
