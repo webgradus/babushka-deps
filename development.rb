@@ -11,9 +11,9 @@ dep 'prepare-deploy', :app_name, :git_username, :server_ip, :app_path, :app_type
   met? {
     Babushka::Renderable.new(app_path / "config/deploy.rb").from?(dependency.load_path.parent / "development/deploy.rb.erb") && 
     Babushka::Renderable.new(app_path / "config/deploy/production.rb").from?(dependency.load_path.parent / "development/deploy/production.rb.erb") &&
-    (web_server == "unicorn"
-      ? Babushka::Renderable.new(app_path / "config/unicorn.rb").from?(dependency.load_path.parent / "development/unicorn.rb.erb")
-      : Babushka::Renderable.new(app_path / "config/puma.rb").from?(dependency.load_path.parent / "development/puma.rb.erb")
+    (web_server == "unicorn" ? 
+       Babushka::Renderable.new(app_path / "config/unicorn.rb").from?(dependency.load_path.parent / "development/unicorn.rb.erb") : 
+       Babushka::Renderable.new(app_path / "config/puma.rb").from?(dependency.load_path.parent / "development/puma.rb.erb")
     )
   }
   meet {
