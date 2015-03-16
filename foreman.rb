@@ -1,4 +1,4 @@
-dep 'foreman', :app_path, :use_faye do
+dep 'foreman', :app_path, :use_faye, :web_server do
   foreman_in_gemfile = shell? %{grep "foreman" Gemfile}, :cd => app_path
   met? {
     Babushka::Renderable.new(app_path / "Procfile.production").from?(dependency.load_path.parent / "foreman/Procfile.production.erb") &&
