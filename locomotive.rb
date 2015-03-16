@@ -39,9 +39,9 @@ dep 'locomotive', :host, :app_name, :port do
     as('root') {
       log "remote Locomotive installation..."
       remote_babushka "webgradus:locomotive.local", :host => host, :app_name => app_name
-      log "generating unicorn.rb..."
+      log "generating web server config..."
       remote_babushka "webgradus:prepare-deploy", :app_name => app_name, :git_username => "gradus", :server_ip => host, :app_path => "/opt/#{app_name}", :app_type => "locomotive", :web_server => "puma"
-      log "starting Unicorn..."
+      log "starting Web server..."
       remote_babushka "webgradus:start", :app_name => app_name, :app_type => "locomotive", :database => "mongodb"
       log "generating Nginx server - restarting Nginx..."
       remote_babushka "webgradus:unicorn-server", :app_name => app_name, :port => port, :app_type => "locomotive"
