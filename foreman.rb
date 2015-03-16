@@ -23,8 +23,8 @@ dep 'foreman.export', :app_path, :use_faye, :web_server do
   }
   meet {
     cd app_path do
-      shell %{bundle exec foreman export initscript /etc/init.d -f ./Procfile.production -a #{app_name} -u root}
-      shell %{chmod 755 /etc/init.d/#{app_name}}
+      shell "bundle exec foreman export initscript /etc/init.d -f ./Procfile.production -a #{app_name} -u root"
+      shell "chmod 755 /etc/init.d/#{app_name}"
     end
   }
 end
@@ -36,6 +36,6 @@ dep 'foreman.start', :app_path, :use_faye, :web_server do
     "/run/#{app_name}/web.1.pid".p.exists?
   }
   meet {
-    shell %{/etc/init.d/#{app_name} start}
+    shell "/etc/init.d/#{app_name} start"
   }
 end
