@@ -1,4 +1,8 @@
+<% if web_server == "unicorn" %>
 web: bundle exec unicorn_rails -Dc config/unicorn.rb -E production
+<% else %>
+web: bundle exec puma -C config/puma.rb
+<% end %>
 <% if use_faye=='yes' %>
 worker: bundle exec rackup faye.ru -s thin -E production -D
 <% end %>
