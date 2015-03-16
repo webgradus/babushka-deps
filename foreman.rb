@@ -14,3 +14,16 @@ dep 'foreman', :app_path, :use_faye, :web_server do
     foreman_in_gemfile = shell? %{grep "foreman" Gemfile}, :cd => app_path
   }
 end
+
+dep 'foreman.export', :app_path, :use_faye, :web_server do
+  requires 'foreman'.with(app_path, use_faye, web_server)
+  app_name = app_path.split("/")[-1]
+  met? {
+    "/etc/init.d/#{app_name}".p.exists?
+  }
+  meet {
+    cd app_path do
+      shell %{bundle exec foreman export initscript /etc/init.d -f ./Procfile.production -a #{app_name} -u root}
+      shell %{chmod 755 /etc/init.d/#{app_name}}
+    end
+end
