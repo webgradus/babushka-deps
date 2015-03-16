@@ -8,7 +8,7 @@ dep 'locomotive.local', :host, :app_name do
       rvm_run_with_ruby "2.0.0", "rails _3.2.21_ new #{app_name} --skip-active-record --skip-test-unit --skip-javascript --skip-bundle"
       cd "#{app_name}", :create => true do
         shell "echo '2.0.0' > .ruby-version"
-        shell %{echo 'gem "locomotive_cms", "~> 2.5.6", :require => "locomotive/engine"' >> Gemfile}
+        shell %{echo 'gem "locomotive_cms", :github => "locomotivecms/engine", :branch => "v2.5.x", :require => "locomotive/engine"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "compass-rails", "~> 2.0.0", :group => "assets"' >> Gemfile}
         shell %{echo 'gem "therubyracer", ">= 0.9.9"' >> Gemfile}
