@@ -1,5 +1,5 @@
 # !!!config valid only for Capistrano 3.1!!!
-lock '3.1.0'
+#lock '3.1.0'
 
 set :application, "<%= app_name %>"
 set :repo_url, "git@gitlab.com:webgradus/#{fetch(:application)}.git"
@@ -10,8 +10,6 @@ set :deploy_to, "/opt/#{fetch(:application)}"
 set :scm, :git
 set :ssh_options, :forward_agent => true
 set :rails_env, "production"
-set :unicorn_config_path, -> { File.join(current_path, "config", "unicorn.rb") }
-set :unicorn_pid, -> { File.join(shared_path, "tmp", "pids", "unicorn.pid") }
 
 # set :format, :pretty
 # set :log_level, :debug
@@ -43,21 +41,21 @@ namespace :foreman do
   desc "Start the application services"
   task :start do
     on roles(:app) do
-      sudo "/etc/init.d/#{fetch(:application)} start"
+      execute "/etc/init.d/#{fetch(:application)} start"
     end
   end
 
   desc "Stop the application services"
   task :stop do
     on roles(:app) do
-      sudo "/etc/init.d/#{fetch(:application)} stop"
+      execute "/etc/init.d/#{fetch(:application)} stop"
     end
   end
 
   desc "Restart the application services"
   task :restart do
     on roles(:app) do
-      sudo "/etc/init.d/#{fetch(:application)} stop; /etc/init.d/#{fetch(:application)} start"
+      execute "/etc/init.d/#{fetch(:application)} stop; /etc/init.d/#{fetch(:application)} start"
     end
   end
 
