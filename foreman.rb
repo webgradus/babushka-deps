@@ -38,6 +38,6 @@ dep 'foreman.start', :app_path, :use_faye, :web_server do
   }
   meet {
     # shell "/etc/init.d/#{app_name} start"
-    shell "service #{app_name} start"
+    shell "RACK_ENV=production foreman start"
   }
 end
