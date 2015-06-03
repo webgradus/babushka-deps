@@ -215,7 +215,7 @@ dep 'http basic auth enabled.nginx', :nginx_prefix, :domain do
   }
 end
 
-dep 'unicorn-server available', :app_name, :port, :app_type do  
+dep 'web-server available', :app_name, :port, :app_type do  
   requires 'configured.nginx'
   app_name.ask("What is the name of application located at /opt")
   port.ask("What port do you want to choose for your application")
@@ -228,9 +228,9 @@ dep 'unicorn-server available', :app_name, :port, :app_type do
   
 end
 
-dep 'unicorn-server', :app_name, :port, :app_type do
+dep 'web-server', :app_name, :port, :app_type do
   app_type.default('rails').choose(%w[rails locomotive])
-  requires 'unicorn-server available'.with(app_name, port, app_type)  
+  requires 'web-server available'.with(app_name, port, app_type)  
   requires 'eye-process.configured'.with(app_name, app_type)
   requires 'autobackup'.with(app_name, "/opt/#{app_name}", nil, nil)
   met? {
