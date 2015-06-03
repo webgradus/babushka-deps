@@ -19,13 +19,13 @@ dep 'foreman.export', :app_path, :use_faye, :web_server do
   requires 'foreman'.with(app_path, use_faye, web_server)
   app_name = app_path.to_s.split("/")[-1]
   met? {
-    "/etc/init.d/#{app_name}".p.exists?
+    "/etc/init/#{app_name}".p.exists?
   }
   meet {
     cd app_path do
-      #shell "bundle exec foreman export initscript /etc/init.d -f ./Procfile.production -a #{app_name} -u root -l /opt/#{app_name}/log"
-      shell "bundle exec foreman export initscript /etc/init -a #{app_name} -u root -l /opt/#{app_name}/log"
-      #shell "chmod 755 /etc/init.d/#{app_name}"
+      # shell "bundle exec foreman export initscript /etc/init.d -f ./Procfile.production -a #{app_name} -u root -l /opt/#{app_name}/log"
+      shell "bundle exec foreman export upstart /etc/init -a #{app_name} -u root -l /opt/#{app_name}/log"
+      # shell "chmod 755 /etc/init.d/#{app_name}"
     end
   }
 end
@@ -37,7 +37,7 @@ dep 'foreman.start', :app_path, :use_faye, :web_server do
     "/run/#{app_name}/web.1.pid".p.exists?
   }
   meet {
-    #shell "/etc/init.d/#{app_name} start"
+    # shell "/etc/init.d/#{app_name} start"
     shell "service #{app_name} start"
   }
 end
