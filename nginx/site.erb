@@ -2,7 +2,8 @@ upstream <%= app_name %>_server{
         <% if app_type == 'rails' %>
           server unix:/opt/<%= app_name %>/current/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
         <% else %>
-          server unix:/opt/<%= app_name %>/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
+          server unix:///opt/<%= app_name %>/tmp/sockets/<%= app_name %>-puma.sock
+          # server unix:/opt/<%= app_name %>/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
         <% end %>
 }
 server {
