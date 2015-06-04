@@ -37,7 +37,7 @@ dep 'foreman.start', :app_path, :use_faye, :web_server do
     "/run/#{app_name}/web.1.pid".p.exists?
   }
   meet {
-    
+    # shell "/etc/init.d/#{app_name} start"
     shell "RACK_ENV=production foreman start"
   }
 end
