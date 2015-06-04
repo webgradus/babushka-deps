@@ -40,11 +40,11 @@ dep 'locomotive', :host, :app_name, :port do
       log "remote Locomotive installation..."
       remote_babushka "webgradus:locomotive.local", :host => host, :app_name => app_name
       log "generating web server config..."
-      remote_babushka "webgradus:prepare-deploy", :app_name => app_name, :git_username => "gradus", :server_ip => host, :app_path => "/opt/#{app_name}", :app_type => "locomotive", :web_server => "puma"
+      remote_babushka "webgradus:prepare-deploy", :app_name => app_name, :git_username => "gradus", :server_ip => host, :app_path => "/opt/#{app_name}", :app_type => "locomotive"#, :web_server => "puma"
       log "exporting init script..."
-      remote_babushka "webgradus:foreman.export", :app_path => "/opt/#{app_name}", :use_faye => "no", :web_server => "puma"
+      remote_babushka "webgradus:foreman.export", :app_path => "/opt/#{app_name}", :use_faye => "no", :web_server => web_server
       log "starting Web server..."
-      remote_babushka "webgradus:foreman.start", :app_path => "/opt/#{app_name}", :use_faye => "no", :web_server => "puma"
+      remote_babushka "webgradus:foreman.start", :app_path => "/opt/#{app_name}", :use_faye => "no", :web_server => web_server
       log "generating Nginx server - restarting Nginx..."
       remote_babushka "webgradus:web-server", :app_name => app_name, :port => port, :app_type => "locomotive"
     }
