@@ -6,7 +6,7 @@ dep 'prepare-deploy', :app_name, :git_username, :server_ip, :app_path, :app_type
   app_path.default!("")
   ruby_version.default("2.1.0")
   use_faye.default('no').choose(%w[yes no])
-  web_server.default('puma').choose(%w[unicorn puma])
+  web_server.default('unicorn').choose(%w[unicorn puma])
   requires 'foreman'.with(app_path, use_faye, web_server)
   met? {
     Babushka::Renderable.new(app_path / "config/deploy.rb").from?(dependency.load_path.parent / "development/deploy.rb.erb") && 
