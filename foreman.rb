@@ -39,9 +39,8 @@ dep 'foreman.start', :app_path, :use_faye, :web_server do
     "/run/#{app_name}/web.1.pid".p.exists?
   }
   meet {
-    cd app_path do
-      shell "/etc/init.d/#{app_name} start"
-      #shell "foreman start -f ./Procfile.production"
-    end
+    shell "/etc/init.d/#{app_name} start"
+    #shell "foreman start -f ./Procfile.production"
+   
   }
 end
