@@ -9,7 +9,7 @@ dep 'foreman', :app_path, :use_faye, :web_server do
     cd app_path do
         shell %{echo 'gem "foreman"' >> Gemfile}
         shell %{echo 'gem "foreman-export-initscript", :github => "webgradus/foreman-export-initscript"' >> Gemfile}
-        shell %{bundle install --no-deployment}
+        shell "bundle install --no-deployment"
     end
     foreman_in_gemfile = shell? %{grep "foreman" Gemfile}, :cd => app_path
   }
