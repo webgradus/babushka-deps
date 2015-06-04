@@ -9,6 +9,7 @@ dep 'foreman', :app_path, :use_faye, :web_server do
     cd app_path do
         shell %{echo 'gem "foreman"' >> Gemfile}
         shell %{echo 'gem "foreman-export-initscript", :github => "webgradus/foreman-export-initscript"' >> Gemfile}
+        log "bundle install..."
         rvm_run_with_ruby "2.0.0", "bundle install"
         # shell %{bundle install}
     end
@@ -20,7 +21,7 @@ dep 'foreman.export', :app_path, :use_faye, :web_server do
   requires 'foreman'.with(app_path, use_faye, web_server)
   app_name = app_path.to_s.split("/")[-1]
   met? {
-    "/etc/init/#{app_name}".p.exists?
+    "/etc/init/#{app_name}.conf".p.exists?
   }
   meet {
     cd app_path do
@@ -40,7 +41,7 @@ dep 'foreman.start', :app_path, :use_faye, :web_server do
   meet {
     cd app_path do
       # shell "/etc/init.d/#{app_name} start"
-      shell "foreman stop -f ./Procfile.production"
+      shell "foreman start -f ./Procfile.production"
     end
   }
 end
