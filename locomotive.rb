@@ -46,7 +46,7 @@ dep 'locomotive', :host, :app_name, :port do
       log "starting Web server..."
       remote_babushka "webgradus:foreman.start", :app_path => "/opt/#{app_name}", :use_faye => "no", :web_server => web_server
       log "generating Nginx server - restarting Nginx..."
-      remote_babushka "webgradus:web-server", :app_name => app_name, :port => port, :app_type => "locomotive"
+      remote_babushka "webgradus:unicorn-server", :app_name => app_name, :port => port, :app_type => "locomotive"
     }
   }
 end
