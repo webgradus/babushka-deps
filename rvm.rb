@@ -49,7 +49,7 @@ dep 'rvm default ruby is set', :default_ruby do
 
   meet do
     while current_rubies.empty?
-      ruby = Babushka::Prompt.get_value("You need at least one ruby installed. Which one do you want to install?", :default => "2.0.0")
+      ruby = Babushka::Prompt.get_value("You need at least one ruby installed. Which one do you want to install?", :default => "2.2.2")
       rvm_run "install #{ruby}"
     end
     if current_rubies.length == 1
@@ -66,7 +66,7 @@ end
 dep 'rvm defaults are installed' do
   requires 'rvm base'
 
-  define_var :rubies, :default => "ruby-2.0.0", :message => "which rubies do you want to create? (seperate by ,)"
+  define_var :rubies, :default => "ruby-2.2.2", :message => "which rubies do you want to create? (seperate by ,)"
   define_var :gems, :default => "bundler, rake, gemedit, powder, pry", :message => "which gems do you want to install into global? (seperate by ,)"
 
 
