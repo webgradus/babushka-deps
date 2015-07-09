@@ -20,7 +20,7 @@ dep 'foreman.export', :app_path, :use_faye, :web_server do
   requires 'foreman'.with(app_path, use_faye, web_server)
   app_name = app_path.to_s.split("/")[-1]
   met? {
-    "/etc/init/#{app_name}.conf".p.exists?
+    "/etc/init/#{app_name}".p.exists?
   }
   meet {
     cd app_path do
