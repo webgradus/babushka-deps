@@ -25,3 +25,7 @@ Deps for Babushka
 ### Развернуть и сконфигурировать весь необходимый софт - Nginx, PostgreSQL, Imagemagick, Redis, RVM, Eye (на сервере):
 
     babushka webgradus:stack
+    
+### Добавить в проект поддержку Foreman, сгенерировать init скрипты и запустить (из папки проекта):
+
+    babushka webgradus:'foreman.start'
