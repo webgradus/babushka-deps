@@ -5,7 +5,7 @@ dep 'redis', :version, :path do
 end
 
 dep 'redis installed', :version, :path do  
-  version.default!('2.8.4')  
+  version.default!('3.0.5')  
   source = "http://download.redis.io/releases/redis-#{version}.tar.gz"
   path.default!("/opt/redis-#{version}")
   
