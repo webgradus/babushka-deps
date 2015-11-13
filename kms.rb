@@ -2,7 +2,7 @@ dep 'kms running', :app_name, :ruby_version do
   app_name.ask("App or site name that will be located at /opt")
   ruby_version.ask("Which ruby version do you want to use?").choose(current_rubies)
   requires 'rvm',
-           'kms installed'.with(app_name, ruby_version),
+           'kms installed'.with(app_name, ruby_version, nil),
            'foreman.start'.with("/opt/#{app_name}", 'no', 'puma')
 end
 
