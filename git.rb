@@ -1,6 +1,6 @@
 dep 'repo accessible', :repo_url do
   met? {
-    shell("git ls-remote #{repo_url}") { |shell| !shell.stdout.include?("fatal") }
+    shell("git ls-remote #{repo_url}") { |shell| shell.stderr.blank? }
   }
   meet { log "Need to setup an access to repo: #{repo_url}. Deploy key may help" }
 end
