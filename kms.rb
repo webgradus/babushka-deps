@@ -6,7 +6,7 @@ dep 'kms running' do
            'foreman.start'.with("/opt/#{app_name}", 'no', 'puma')
 end
 
-dep 'kms installed', :app_name, :ruby_version do
+dep 'kms installed', :app_name, :ruby_version, :postgres_password do
   # check if we have rails and if we have access to KMS repo
   requires 'rails installed'.with(ruby_version, "4.2.5"), 'repo accessible'.with("git@gitlab.com:webgradus/kms.git")
   postgres_password.ask("Please type PostgreSQL password for user 'postgres'")
