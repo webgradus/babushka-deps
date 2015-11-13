@@ -1,4 +1,4 @@
-def 'repo accessible', :repo_url do
+dep 'repo accessible', :repo_url do
   met? {
     shell("git ls-remote #{repo_url}") { |shell| !shell.stdout.include?("fatal") }
   }
