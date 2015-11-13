@@ -1,3 +1,10 @@
+def 'repo accessible', :repo_url do
+  met? {
+    shell("git ls-remote #{repo_url}") { |shell| !shell.stdout.include?("fatal") }
+  }
+  meet { log "Need to setup an access to repo: #{repo_url}. Deploy key may help" }
+end
+
 dep 'git.managed' do
   requires 'ppa'.with('ppa:git-core/ppa')
   installs 'git'
