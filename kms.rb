@@ -1,4 +1,4 @@
-dep 'kms running' do
+dep 'kms running', :app_name, :ruby_version do
   app_name.ask("App or site name that will be located at /opt")
   ruby_version.ask("Which ruby version do you want to use?").choose(current_rubies)
   requires 'rvm',
