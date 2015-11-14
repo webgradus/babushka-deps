@@ -23,17 +23,19 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
         shell %{echo 'gem "sprockets", "2.12.4"' >> Gemfile}
         shell %{mkdir tmp/pids; mkdir tmp/sockets}
         log "bundle install..."
-        shell %{bundle install}
+        rvm_run_with_ruby ruby_version, %{bundle install}
         log "setup database.yml..."
         render_erb "kms/database.yml.erb", to: "config/database.yml"
         log "running kms generator..."
-        shell %{RAILS_ENV=production bundle exec rails g kms:install}
+        rvm_run_with_ruby ruby_version, %{RAILS_ENV=production bundle exec rails g kms:install}
         log "install migrations..."
-        shell %{RAILS_ENV=production bundle exec rake kms:install:migrations}
+        rvm_run_with_ruby ruby_version, %{RAILS_ENV=production bundle exec rake kms:install:migrations}
+        log "creating database..."
+        rvm_run_with_ruby ruby_version, %{RAILS_ENV=production bundle exec rake db:create}
         log "applying migrations..."
-        shell %{RAILS_ENV=production bundle exec rake db:migrate}
+        rvm_run_with_ruby ruby_version, %{RAILS_ENV=production bundle exec rake db:migrate}
         log "precompiling assets..."
-        shell %{RAILS_ENV=production bundle exec rake assets:precompile}
+        rvm_run_with_ruby ruby_version, %{RAILS_ENV=production bundle exec rake assets:precompile}
       end
     end
   }
