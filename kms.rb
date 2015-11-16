@@ -30,6 +30,8 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
         render_erb "kms/database.yml.erb", to: "config/database.yml"
         log "setup secrets.yml..."
         raw_shell %{echo "ENV['SECRET_KEY_BASE']='$(rvm-shell -c 'bundle exec rake secret')'" >> config/environments/production.rb}
+        log "setup locale..."
+        raw_shell %{echo "I18n.default_locale = :ru" >> config/application.rb}
         log "running kms generator..."
         rvm_shell %{RAILS_ENV=production bundle exec rails g kms:install}
         log "install migrations..."
