@@ -26,6 +26,8 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
         rvm_run_with_ruby ruby_version, %{bundle install}
         log "setup database.yml..."
         render_erb "kms/database.yml.erb", to: "config/database.yml"
+        log "setup secrets.yml..."
+        raw_shell %{echo "ENV['SECRET_KEY_BASE']='$(bundle exec rake secret)'" >> config/environments/production.rb}
         log "running kms generator..."
         rvm_run_with_ruby ruby_version, %{bundle exec rails g kms:install RAILS_ENV=production}
         log "install migrations..."
