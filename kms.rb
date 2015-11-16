@@ -4,7 +4,8 @@ dep 'kms running', :app_name, :ruby_version do
   requires 'rvm',
            'kms installed'.with(app_name, ruby_version, nil),
            'puma configured'.with(app_name, 'kms'),
-           'foreman.start'.with("/opt/#{app_name}", 'no', 'puma')
+           'foreman.start'.with("/opt/#{app_name}", 'no', 'puma'),
+           'server'.with(app_name, rand(3000..5000), 'kms')
 end
 
 dep 'kms installed', :app_name, :ruby_version, :postgres_password do

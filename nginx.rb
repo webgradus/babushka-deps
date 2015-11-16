@@ -147,7 +147,7 @@ dep 'configured.nginx', :nginx_prefix do
   }
   meet {
     sudo "mkdir #{nginx_prefix / 'sites-available'}"
-    sudo "mkdir #{nginx_prefix / 'sites-enabled'}" 
+    sudo "mkdir #{nginx_prefix / 'sites-enabled'}"
     render_erb 'nginx/nginx.conf.erb', :to => nginx_conf, :sudo => true
   }
 end
@@ -158,7 +158,7 @@ dep 'nginx.src', :nginx_prefix, :version, :upload_module_version do
   upload_module_version.default!('2.2')
 
   requires 'pcre.lib', 'libssl.lib', 'zlib.lib'
-  on :linux do 
+  on :linux do
     requires "unzip.bin"
   end
 
@@ -215,30 +215,30 @@ dep 'http basic auth enabled.nginx', :nginx_prefix, :domain do
   }
 end
 
-dep 'unicorn-server available', :app_name, :port, :app_type do  
+dep 'server available', :app_name, :port, :app_type do
   requires 'configured.nginx'
   app_name.ask("What is the name of application located at /opt")
   port.ask("What port do you want to choose for your application")
-  met? {    
+  met? {
     Babushka::Renderable.new("/opt/nginx/sites-available/#{app_name}").from?(dependency.load_path.parent / "nginx/site.erb")
   }
-  meet {    
-    render_erb "nginx/site.erb", :to => "/opt/nginx/sites-available/#{app_name}", :sudo => true    
+  meet {
+    render_erb "nginx/site.erb", :to => "/opt/nginx/sites-available/#{app_name}", :sudo => true
   }
-  
+
 end
 
-dep 'unicorn-server', :app_name, :port, :app_type do
-  app_type.default('rails').choose(%w[rails locomotive])
-  requires 'unicorn-server available'.with(app_name, port, app_type)  
+dep 'server', :app_name, :port, :app_type do
+  app_type.default('rails').choose(%w[rails kms])
+  requires 'server available'.with(app_name, port, app_type)
   requires 'eye-process.configured'.with(app_name, app_type)
   requires 'autobackup'.with(app_name, "/opt/#{app_name}", nil, nil)
   met? {
-    "/opt/nginx/sites-enabled/#{app_name}".p.exists?    
+    "/opt/nginx/sites-enabled/#{app_name}".p.exists?
   }
-  meet {    
+  meet {
     shell("ln -f -s /opt/nginx/sites-available/#{app_name} /opt/nginx/sites-enabled/")
     shell("service nginx restart")
   }
-  
+
 end
