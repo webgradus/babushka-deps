@@ -10,7 +10,7 @@ dep 'foreman', :app_path, :use_faye, :web_server do
         shell %{echo 'gem "foreman"' >> Gemfile}
         shell %{echo 'gem "foreman-export-initscript", :github => "webgradus/foreman-export-initscript"' >> Gemfile}
         log "bundle install..."
-        shell %{bundle install}
+        rvm_shell %{bundle install}
     end
     foreman_in_gemfile = shell? %{grep "foreman" Gemfile}, :cd => app_path
   }
@@ -24,7 +24,7 @@ dep 'foreman.export', :app_path, :use_faye, :web_server do
   }
   meet {
     cd app_path do
-      shell "bundle exec foreman export initscript /etc/init.d -f ./Procfile.production -a #{app_name} -u root -l /opt/#{app_name}/log"
+      rvm_shell "bundle exec foreman export initscript /etc/init.d -f ./Procfile.production -a #{app_name} -u root -l /opt/#{app_name}/log"
       #rvm_run_with_ruby "2.0.0", "bundle exec foreman export upstart /etc/init -f ./Procfile.production -a #{app_name} -u root -l /opt/#{app_name}/log"
       shell "chmod 755 /etc/init.d/#{app_name}"
     end
@@ -40,6 +40,6 @@ dep 'foreman.start', :app_path, :use_faye, :web_server do
   meet {
     shell "/etc/init.d/#{app_name} start"
     #shell "foreman start -f ./Procfile.production"
-   
+
   }
 end
