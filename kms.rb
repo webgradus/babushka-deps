@@ -3,6 +3,7 @@ dep 'kms running', :app_name, :ruby_version do
   ruby_version.ask("Which ruby version do you want to use?").choose(current_rubies)
   requires 'rvm',
            'kms installed'.with(app_name, ruby_version, nil),
+           'puma configured'.with("/opt/#{app_name}"),
            'foreman.start'.with("/opt/#{app_name}", 'no', 'puma')
 end
 
