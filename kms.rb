@@ -29,15 +29,15 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
         log "setup secrets.yml..."
         raw_shell %{echo "ENV['SECRET_KEY_BASE']='$(bundle exec rake secret)'" >> config/environments/production.rb}
         log "running kms generator..."
-        rvm_run_with_ruby ruby_version, %{bundle exec rails g kms:install RAILS_ENV=production}
+        rvm_shell %{bundle exec rails g kms:install RAILS_ENV=production}
         log "install migrations..."
-        rvm_run_with_ruby ruby_version, %{bundle exec rake kms:install:migrations RAILS_ENV=production}
+        rvm_shell %{bundle exec rake kms:install:migrations RAILS_ENV=production}
         log "creating database..."
-        rvm_run_with_ruby ruby_version, %{bundle exec rake db:create RAILS_ENV=production}
+        rvm_shell %{bundle exec rake db:create RAILS_ENV=production}
         log "applying migrations..."
-        rvm_run_with_ruby ruby_version, %{bundle exec rake db:migrate RAILS_ENV=production}
+        rvm_shell %{bundle exec rake db:migrate RAILS_ENV=production}
         log "precompiling assets..."
-        rvm_run_with_ruby ruby_version, %{bundle exec rake assets:precompile RAILS_ENV=production}
+        rvm_shell %{bundle exec rake assets:precompile RAILS_ENV=production}
       end
     end
   }
