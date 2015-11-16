@@ -7,12 +7,12 @@ meet {
 }
 end
 
-dep 'puma configured', :app_path do
+dep 'puma configured', :app_name, :app_type do
     met? {
-        Babushka::Renderable.new(app_path / "config/puma.rb").from?(dependency.load_path.parent / "development/puma.rb.erb")
+        Babushka::Renderable.new("/opt" / app_name / "config/puma.rb").from?(dependency.load_path.parent / "development/puma.rb.erb")
     }
 
     meet {
-        render_erb "development/puma.rb.erb", :to => (app_path / "config/puma.rb").to_s
+        render_erb "development/puma.rb.erb", :to => ("/opt" / app_name / "config/puma.rb").to_s
     }
 end
