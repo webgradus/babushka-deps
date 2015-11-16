@@ -23,21 +23,21 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
         shell %{echo 'gem "sprockets", "2.12.4"' >> Gemfile}
         shell %{mkdir tmp/pids; mkdir tmp/sockets}
         log "bundle install..."
-        rvm_run_with_ruby ruby_version, %{bundle install}
+        rvm_shell %{bundle install}
         log "setup database.yml..."
         render_erb "kms/database.yml.erb", to: "config/database.yml"
         log "setup secrets.yml..."
         raw_shell %{echo "ENV['SECRET_KEY_BASE']='$(bundle exec rake secret)'" >> config/environments/production.rb}
         log "running kms generator..."
-        rvm_shell %{bundle exec rails g kms:install RAILS_ENV=production}
+        rvm_shell %{RAILS_ENV=production bundle exec rails g kms:install}
         log "install migrations..."
-        rvm_shell %{bundle exec rake kms:install:migrations RAILS_ENV=production}
+        rvm_shell %{RAILS_ENV=production bundle exec rake kms:install:migrations}
         log "creating database..."
-        rvm_shell %{bundle exec rake db:create RAILS_ENV=production}
+        rvm_shell %{RAILS_ENV=production bundle exec rake db:create}
         log "applying migrations..."
-        rvm_shell %{bundle exec rake db:migrate RAILS_ENV=production}
+        rvm_shell %{RAILS_ENV=production bundle exec rake db:migrate}
         log "precompiling assets..."
-        rvm_shell %{bundle exec rake assets:precompile RAILS_ENV=production}
+        rvm_shell %{RAILS_ENV=production bundle exec rake assets:precompile}
       end
     end
   }
