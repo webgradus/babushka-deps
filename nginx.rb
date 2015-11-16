@@ -187,10 +187,11 @@ dep 'nginx.src', :nginx_prefix, :version, :upload_module_version do
     if !File.executable?(nginx_prefix / 'sbin/nginx')
       log "nginx isn't installed"
     else
-      installed_version = shell(nginx_prefix / 'sbin/nginx -v') {|shell| shell.stderr }.val_for(/(nginx: )?nginx version:/).sub('nginx/', '')
-      (installed_version.to_version >= version.to_s).tap {|result|
-        log "nginx-#{installed_version} is installed"
-      }
+      #installed_version = shell(nginx_prefix / 'sbin/nginx -v') {|shell| shell.stderr }.val_for(/(nginx: )?nginx version:/).sub('nginx/', '')
+      #(installed_version.to_version >= version.to_s).tap {|result|
+        #log "nginx-#{installed_version} is installed"
+      #}
+      shell?(nginx_prefix / 'sbin/nginx -v')
     end
   }
 end
