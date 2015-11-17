@@ -12,7 +12,7 @@ Deps for Babushka
 
 ### Добавляем server для nginx в sites-available с помощью (на сервере):
 
-    babushka webgradus:unicorn-server
+    babushka webgradus:server
 
 ### Добавить проект в систему бэкапирования (на сервере):
 
@@ -29,3 +29,7 @@ Deps for Babushka
 ### Добавить в проект поддержку Foreman, сгенерировать init скрипты и запустить (из папки проекта):
 
     babushka webgradus:'foreman.start'
+    
+### Установить KMS в режиме production (на сервере):
+
+    babushka webgradus:'kms running'
