@@ -2,13 +2,12 @@ upstream <%= app_name %>_server{
         <% if app_type == 'rails' %>
           server unix:/opt/<%= app_name %>/current/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
         <% else %>
-          server unix:///opt/<%= app_name %>/tmp/sockets/<%= app_name %>-puma.sock
-          # server unix:/opt/<%= app_name %>/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
+          server unix:/opt/<%= app_name %>/tmp/sockets/<%= app_name %>.sock fail_timeout=0;
         <% end %>
 }
 server {
    listen <%= port %>;
-   # server_name <%= app_name %>.ru www.<%= app_name %>.ru
+   # server_name <%= app_name %>.ru www.<%= app_name %>.ru;
    client_max_body_size 1G;
    keepalive_timeout 5;
    <% if app_type == 'rails' %>
