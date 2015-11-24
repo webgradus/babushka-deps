@@ -32,12 +32,12 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
         raw_shell %{echo "ENV['SECRET_KEY_BASE']='$(rvm-shell -c 'bundle exec rake secret')'" >> config/environments/production.rb}
         log "setup locale..."
         raw_shell %{echo "I18n.default_locale = :ru" >> config/application.rb}
+        log "creating database..."
+        rvm_shell %{RAILS_ENV=production bundle exec rake db:create}
         log "running kms generator..."
         rvm_shell %{RAILS_ENV=production bundle exec rails g kms:install}
         log "install migrations..."
         rvm_shell %{RAILS_ENV=production bundle exec rake kms:install:migrations}
-        log "creating database..."
-        rvm_shell %{RAILS_ENV=production bundle exec rake db:create}
         log "applying migrations..."
         rvm_shell %{RAILS_ENV=production bundle exec rake db:migrate}
         log "precompiling assets..."
