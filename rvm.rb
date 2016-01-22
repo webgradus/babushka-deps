@@ -35,7 +35,7 @@ dep 'rvm installed' do
   meet {
     shell 'gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3'
     shell 'curl -sSL https://get.rvm.io | bash -s stable'
-    shell "echo 'source /usr/local/rvm/scripts/rvm' >> ~/.bashrc"
+    shell "echo 'source /usr/local/rvm/scripts/rvm' >> ~/.bash_profile"
     shell "source '/usr/local/rvm/scripts/rvm'"
   }
 end
