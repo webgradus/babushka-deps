@@ -26,15 +26,19 @@ set :keep_releases, 5
 # ----- RVM ----------
 set :rvm_type, :system
 set :rvm_ruby_version, '<%= ruby_version %>'
+set :bundle_bins, fetch(:bundle_bins) + %w(foreman)
+set :rvm_map_bins, %w{gem rake ruby bundle foreman}
 
 # - for unicorn - #
 namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
   task :export do
     on roles(:app) do
-      execute "cd #{current_path} && bundle exec foreman export initscript /etc/init.d " +
+      within release_path do
+        execute :foreman, "export initscript /etc/init.d " +
       "-f ./Procfile.production -a #{fetch(:application)} -u #{fetch(:user)} -l #{shared_path}/log"
-      execute "chmod 755 /etc/init.d/#{fetch(:application)}"
+        execute "chmod 755 /etc/init.d/#{fetch(:application)}"
+      end
     end
   end
 
