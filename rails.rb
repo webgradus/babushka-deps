@@ -17,7 +17,7 @@ dep 'puma configured', :app_name, :app_type do
     }
 end
 
-dep 'unicorn configured', :app_name, :app_type do
+dep 'unicorn configured', :ruby_version, :app_name, :app_type do
     met? {
         Babushka::Renderable.new("/opt" / app_name / "config/unicorn.rb").from?(dependency.load_path.parent / "development/unicorn.rb.erb")
     }
