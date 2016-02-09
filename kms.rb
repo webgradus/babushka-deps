@@ -3,8 +3,8 @@ dep 'kms running', :app_name, :ruby_version do
   ruby_version.ask("Which ruby version do you want to use?").choose(current_rubies)
   requires 'rvm',
            'kms installed'.with(app_name, ruby_version, nil),
-           'puma configured'.with(app_name, 'kms'),
-           'foreman.start'.with("/opt/#{app_name}", 'no', 'puma'),
+           'unicorn configured'.with(app_name, 'kms'),
+           'foreman.start'.with("/opt/#{app_name}", 'no', 'unicorn'),
            'server'.with(app_name, rand(3000..5000), 'kms')
 end
 
@@ -21,7 +21,7 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
       shell "echo '#{ruby_version}' > .ruby-version", cd: app_name
       cd "#{app_name}", create: true do
         shell %{echo 'gem "kms", git: "git@gitlab.com:webgradus/kms.git"' >> Gemfile}
-        shell %{echo 'gem "puma"' >> Gemfile}
+        shell %{echo 'gem "unicorn"' >> Gemfile}
         shell %{echo 'gem "sprockets", "2.12.4"' >> Gemfile}
         shell %{mkdir tmp/pids; mkdir tmp/sockets}
         log "bundle install..."
