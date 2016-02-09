@@ -3,7 +3,7 @@ dep 'kms running', :app_name, :ruby_version do
   ruby_version.ask("Which ruby version do you want to use?").choose(current_rubies)
   requires 'rvm',
            'kms installed'.with(app_name, ruby_version, nil),
-           'unicorn configured'.with(app_name, 'kms'),
+           'unicorn configured'.with(ruby_version, app_name, 'kms'),
            'foreman.start'.with("/opt/#{app_name}", 'no', 'unicorn'),
            'server'.with(app_name, rand(3000..5000), 'kms')
 end
