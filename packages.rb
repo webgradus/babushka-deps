@@ -47,7 +47,7 @@ dep 'rcconf.bin' do
 end
 
 dep 'tcl.bin' do
-  installs { via :apt, 'tcl8.5' }
+  installs { via :apt, 'tcl' }
   provides 'tclsh'
 end
 
