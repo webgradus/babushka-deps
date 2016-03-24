@@ -12,12 +12,12 @@ end
 
 dep 'eye.installed' do
   met? {
-    rvm_run_with_ruby("2.2.2", "gem list eye") {|shell| shell.stdout.include?("eye") }
+    rvm_run_with_ruby("2.3.0", "gem list eye") {|shell| shell.stdout.include?("eye") }
   }
   meet {
-    rvm_run_with_ruby "2.2.2", "gem install eye --no-rdoc --no-ri"
-    rvm_run_with_ruby "2.2.2", "gem install eye-http --no-rdoc --no-ri"
-    eye_lib_path = rvm_run_with_ruby "2.2.2", "gem which eye"
+    rvm_run_with_ruby "2.3.0", "gem install eye --no-rdoc --no-ri"
+    rvm_run_with_ruby "2.3.0", "gem install eye-http --no-rdoc --no-ri"
+    eye_lib_path = rvm_run_with_ruby "2.3.0", "gem which eye"
     #puts eye_lib_path
     #puts File.expand_path(eye_lib_path, "../bin/eye")
     shell("ln -sf #{File.expand_path(eye_lib_path, "../bin/eye")} /usr/local/bin/eye")
