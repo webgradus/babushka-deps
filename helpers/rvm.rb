@@ -20,5 +20,5 @@ end
 
 def current_rubies
   out = rvm_run("list rubies")
-  rubies = out.scan(/^[=> ]{3}([^ ]+) /).flatten
+  rubies = out.scan(/^[=>* ]{3}([^ ]+) /).flatten
 end
