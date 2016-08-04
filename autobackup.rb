@@ -3,7 +3,7 @@ dep 'autobackup', :app_name, :app_path, :database, :ruby_version_for_backup_scri
   app_name.ask("What is the name of application?")
   app_path.default!("")
   database.default("postgresql").choose(%w[mysql postgresql mongodb])
-  ruby_version_for_backup_script.default("2.3.0").choose(%w[2.2.2 2.3.0])
+  ruby_version_for_backup_script.default("2.3.1").choose(%w[2.2.2 2.3.0 2.3.1])
 
   met? {
     Babushka::Renderable.new("~/Backup/models/" + app_name + "_database.rb").from?(dependency.load_path.parent / "autobackup/model_database_template.rb.erb")&&Babushka::Renderable.new("~/Backup/models/" + app_name + "_archives.rb").from?(dependency.load_path.parent / "autobackup/model_archive_template.rb.erb")
