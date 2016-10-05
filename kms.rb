@@ -10,14 +10,14 @@ end
 
 dep 'kms installed', :app_name, :ruby_version, :postgres_password do
   # check if we have rails and if we have access to KMS repo
-  requires 'rails installed'.with(ruby_version, "4.2.6"), 'repo accessible'.with("git@gitlab.com:webgradus/kms.git")
+  requires 'rails installed'.with(ruby_version, "4.2.7.1"), 'repo accessible'.with("git@gitlab.com:webgradus/kms.git")
   postgres_password.ask("Please type PostgreSQL password for user 'postgres'")
 
   met? { "/opt/#{app_name}".p.exists? }
 
   meet {
     cd "/opt" do
-      rvm_run_with_ruby ruby_version, "rails _4.2.6_ new #{app_name} --skip-test-unit --skip-bundle --database=postgresql"
+      rvm_run_with_ruby ruby_version, "rails _4.2.7.1_ new #{app_name} --skip-test-unit --skip-bundle --database=postgresql"
       shell "echo '#{ruby_version}' > .ruby-version", cd: app_name
       cd "#{app_name}", create: true do
         shell %{echo 'gem "kms"' >> Gemfile}
