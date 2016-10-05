@@ -21,6 +21,7 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
       shell "echo '#{ruby_version}' > .ruby-version", cd: app_name
       cd "#{app_name}", create: true do
         shell %{echo 'gem "kms"' >> Gemfile}
+        shell %{echo 'gem "kms_models"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}        
         shell %{mkdir tmp/pids; mkdir tmp/sockets}
         log "bundle install..."
