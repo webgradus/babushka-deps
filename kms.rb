@@ -36,8 +36,12 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
         rvm_shell %{RAILS_ENV=production bundle exec rake db:create}
         log "running kms generator..."
         rvm_shell %{RAILS_ENV=production bundle exec rails g kms:install}
+        log "running kms_models generator..."
+        rvm_shell %{RAILS_ENV=production bundle exec rails g kms_models:install}        
         log "install migrations..."
         rvm_shell %{RAILS_ENV=production bundle exec rake kms:install:migrations}
+        log "install kms_models migrations..."
+        rvm_shell %{RAILS_ENV=production bundle exec rake kms_models:install:migrations}
         log "applying migrations..."
         rvm_shell %{RAILS_ENV=production bundle exec rake db:migrate}
         log "precompiling assets..."
