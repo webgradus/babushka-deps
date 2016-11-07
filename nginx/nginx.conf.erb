@@ -31,12 +31,12 @@ http {
 
   # Don't edit this to serve content; instead, add a vhost.
   server {
-    listen 127.0.0.1:80;
+    listen 80 default_server;
     server_name localhost;
 
     location / {
-      root html;
-      index index.html;
+      root /opt/nginx/html/NginxDefault;
+      index NginxDefault.html;
     }
   }
   
