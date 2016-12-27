@@ -10,7 +10,7 @@ end
 
 dep 'kms installed', :app_name, :ruby_version, :postgres_password do
   # check if we have rails and if we have access to KMS repo
-  requires 'rails installed'.with(ruby_version, "5.0.0.1"), 'repo accessible'.with("git@gitlab.com:webgradus/kms.git")
+  requires 'rails installed'.with(ruby_version, "5.0.0.1") #, 'repo accessible'.with("git@gitlab.com:webgradus/kms.git")
   postgres_password.ask("Please type PostgreSQL password for user 'postgres'")
 
   met? { "/opt/#{app_name}".p.exists? }
