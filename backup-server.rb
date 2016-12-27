@@ -1,5 +1,5 @@
 dep 'backup-server', :ruby_version do
-    ruby_version.default("2.3.1").choose(%w[2.2.2 2.3.0 2.3.1])
+    ruby_version.choose(current_rubies)
     met? {
         "~/Backup".p.exists?
         # Babushka::Renderable.new("~/Backup/config.rb").from?(dependency.load_path.parent / "backup-server/config.rb.erb")
