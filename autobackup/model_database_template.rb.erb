@@ -3,12 +3,12 @@
 Backup::Model.new(:<%= app_name %>_database, "Backup of <%= app_name %>'s database") do
 
   <% if database == 'mysql' %>
-    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt','<%=app_name%>','shared', 'config', 'database.yml'))).result)['production']
+    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt','<%=app_name%>',<%= app_type == 'rails' ? "'shared'," : "" %> 'config', 'database.yml'))).result)['production']
     database MySQL do |db|
       db.name               = dbconfig['database']
     end
   <% elsif database == 'postgresql' %>
-    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt','<%=app_name%>', 'shared', 'config', 'database.yml'))).result)['production']
+    dbconfig = YAML::load(ERB.new(IO.read(File.join('/opt','<%=app_name%>',<%= app_type == 'rails' ? "'shared'," : "" %> 'config', 'database.yml'))).result)['production']
     database PostgreSQL do |db|
       db.name               = dbconfig['database']
     end
