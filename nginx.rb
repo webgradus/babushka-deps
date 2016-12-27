@@ -230,7 +230,7 @@ dep 'server available', :app_name, :port, :app_type do
 end
 
 dep 'server', :app_name, :port, :app_type do
-  app_type.default('rails').choose(%w[rails kms])
+  app_type.default('rails').choose(%w[rails kms]) unless app_type
   requires 'server available'.with(app_name, port, app_type)
   requires 'eye-process.configured'.with(app_name, app_type)
   requires 'autobackup'.with(app_name, "/opt/#{app_name}", nil, nil)
