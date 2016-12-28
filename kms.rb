@@ -22,6 +22,8 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
       cd "#{app_name}", create: true do
         shell %{echo 'gem "kms", github: "webgradus/kms"' >> Gemfile}
         shell %{echo 'gem "kms_models", github: "webgradus/kms_models"' >> Gemfile}
+        shell %{echo 'gem "kms_feedback", github: "webgradus/kms_feedback"' >> Gemfile}
+        shell %{echo 'gem "kms_seo", github: "webgradus/kms_seo"' >> Gemfile}
         shell %{echo 'gem "unicorn"' >> Gemfile}        
         shell %{mkdir tmp/pids; mkdir tmp/sockets}
         log "bundle install..."
@@ -37,11 +39,19 @@ dep 'kms installed', :app_name, :ruby_version, :postgres_password do
         log "running kms generator..."
         rvm_shell %{RAILS_ENV=production bundle exec rails g kms:install}
         log "running kms_models generator..."
-        rvm_shell %{RAILS_ENV=production bundle exec rails g kms_models:install}        
+        rvm_shell %{RAILS_ENV=production bundle exec rails g kms_models:install}
+        log "running kms_feedback generator..."
+        rvm_shell %{RAILS_ENV=production bundle exec rails g kms_feedback:install}
+        log "running kms_seo generator..."
+        rvm_shell %{RAILS_ENV=production bundle exec rails g kms_seo:install}
         log "install migrations..."
         rvm_shell %{RAILS_ENV=production bundle exec rails kms:install:migrations}
         log "install kms_models migrations..."
         rvm_shell %{RAILS_ENV=production bundle exec rails kms_models:install:migrations}
+        log "install kms_feedback migrations..."
+        rvm_shell %{RAILS_ENV=production bundle exec rails kms_feedback:install:migrations}
+        log "install kms_seo migrations..."
+        rvm_shell %{RAILS_ENV=production bundle exec rails kms_seo:install:migrations}
         log "applying migrations..."
         rvm_shell %{RAILS_ENV=production bundle exec rails db:migrate}
         log "precompiling assets..."
