@@ -58,10 +58,10 @@ backupconfig = YAML::load(ERB.new(IO.read(File.join('/root','Backup','config', '
      compression.level = 6
    end
 
-   Database::MySQL.defaults do |db|
-     db.username = backupconfig['database']['mysql']['username']
-     db.password = backupconfig['database']['mysql']['password']
-   end
+   #Database::MySQL.defaults do |db|
+   #  db.username = backupconfig['database']['mysql']['username']
+   #  db.password = backupconfig['database']['mysql']['password']
+   #end
 
    Database::PostgreSQL.defaults do |db|
      db.username = backupconfig['database']['postgresql']['username']
