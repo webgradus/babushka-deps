@@ -29,7 +29,7 @@ Eye.application '<%= hostname %>' do
   group 'Storage' do
   
     process :postgresql do
-      pid_file '/var/run/postgresql/9.3-main.pid'
+      pid_file '/var/run/postgresql/9.5-main.pid'
       start_command "service postgresql start"
       restart_command "service postgresql restart"
       stop_command "service postgresql stop"
