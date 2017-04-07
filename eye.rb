@@ -32,6 +32,9 @@ dep 'eye.configured', :hostname do
   }
   meet {
     render_erb "eye/server.eye.erb", :to => "/root/eye/server.eye"
+    render_erb "eye/extended_router.rb", :to => "/root/eye/extended_router.rb"
+    render_erb "eye/extended_controller.rb", :to => "/root/eye/extended_controller.rb"
+    render_erb "eye/http_decorator.rb", :to => "/root/eye/http_decorator.rb"
   }
 end
 
