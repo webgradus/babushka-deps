@@ -1,22 +1,26 @@
+Celluloid::Logger = Celluloid::Internals::Logger
 require 'eye-http'
+Eye.load('./extended_router.rb')
+Eye.load('./http_decorator.rb')
+Eye.load('./extended_controller.rb')
 
 Eye.config do
-  http :enable => true, :host => "0.0.0.0", :port => 10001
+  http :enable => true, :host => "0.0.0.0", :port => 10001, :router => Eye::Http::ExtendedRouter
   logger '/var/log/eye.log'
 end
 
 Eye.application '<%= hostname %>' do
-  
+
   # Uncomment if FTP on server
   #process :proftpd do
   #  pid_file '/var/run/proftpd.pid'
   #  start_command "/etc/init.d/proftpd start"
   #  restart_command "/etc/init.d/proftpd restart"
   #  stop_signals [:TERM, 10.seconds]
-    
+
   #  restart_grace 30.seconds
   #end
-  
+
   process :nginx do
     pid_file '/opt/nginx/logs/nginx.pid'
     start_command "service nginx start"
@@ -25,9 +29,9 @@ Eye.application '<%= hostname %>' do
 
     restart_grace 30.seconds
   end
-  
+
   group 'Storage' do
-  
+
     process :postgresql do
       pid_file '/var/run/postgresql/9.5-main.pid'
       start_command "service postgresql start"
@@ -36,7 +40,7 @@ Eye.application '<%= hostname %>' do
 
       restart_grace 30.seconds
     end
-  
+
     process :redis do
       pid_file '/var/run/redis_6379.pid'
       start_command "service redis_6379 start"
@@ -45,7 +49,7 @@ Eye.application '<%= hostname %>' do
 
       restart_grace 30.seconds
     end
-  
+
     #process :mongodb do
     #  pid_file '/var/run/mongod.pid'
     #  start_command "service mongod start"
@@ -54,9 +58,9 @@ Eye.application '<%= hostname %>' do
 
     #  restart_grace 30.seconds
     #end
-    
+
   end
-  
+
   group 'Apps' do
     # Template for Rails Unicorn app
     #process :app do
