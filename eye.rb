@@ -27,7 +27,7 @@ dep 'eye.installed' do
     eye_lib_path = rvm_run_with_ruby "2.3.3", "gem which eye"
     #puts eye_lib_path
     #puts File.expand_path(eye_lib_path, "../bin/eye")
-    shell("ln -sf #{File.expand_path(eye_lib_path, "../bin/eye")} /usr/local/bin/eye")
+    shell("ln -sf #{File.expand_path(File.join(eye_lib_path, "../../bin/eye"))} /usr/local/bin/eye")
     shell("mkdir /root/eye")
   }
 end
