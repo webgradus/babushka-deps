@@ -36,15 +36,15 @@ dep 'eye.configured', :hostname do
   requires 'eye.installed'
   met? {
     Babushka::Renderable.new("/root/eye/server.eye").from?(dependency.load_path.parent / "eye/server.eye.erb") &&
-    Babushka::Renderable.new("/root/eye/extended_router.rb").from?(dependency.load_path.parent / "eye/extended_router.rb") &&
-    Babushka::Renderable.new("/root/eye/extended_controller.rb").from?(dependency.load_path.parent / "eye/extended_controller.rb") &&
-    Babushka::Renderable.new("/root/eye/http_decorator.rb").from?(dependency.load_path.parent / "eye/http_decorator.rb")
+    Babushka::Renderable.new("/root/eye/extended_router.rb").from?(dependency.load_path.parent / "eye/extended_router.rb.erb") &&
+    Babushka::Renderable.new("/root/eye/extended_controller.rb").from?(dependency.load_path.parent / "eye/extended_controller.rb.erb") &&
+    Babushka::Renderable.new("/root/eye/http_decorator.rb").from?(dependency.load_path.parent / "eye/http_decorator.rb.erb")
   }
   meet {
     render_erb "eye/server.eye.erb", :to => "/root/eye/server.eye"
-    render_erb "eye/extended_router.rb", :to => "/root/eye/extended_router.rb"
-    render_erb "eye/extended_controller.rb", :to => "/root/eye/extended_controller.rb"
-    render_erb "eye/http_decorator.rb", :to => "/root/eye/http_decorator.rb"
+    render_erb "eye/extended_router.rb.erb", :to => "/root/eye/extended_router.rb"
+    render_erb "eye/extended_controller.rb.erb", :to => "/root/eye/extended_controller.rb"
+    render_erb "eye/http_decorator.rb.erb", :to => "/root/eye/http_decorator.rb"
   }
 end
 
